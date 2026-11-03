@@ -84,7 +84,6 @@ public class PdfExportService {
             // TABLE OF CONTENTS & SECTIONS
             Font secHeadingFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, new Color(124, 92, 252));
             Font bodyFont = FontFactory.getFont(FontFactory.HELVETICA, 10, new Color(30, 41, 59));
-            bodyFont.setLeading(15, 0);
 
             for (BusinessPlanSection sec : sections) {
                 Paragraph secHeading = new Paragraph(sec.getSectionTitle(), secHeadingFont);
@@ -96,6 +95,7 @@ public class PdfExportService {
                         ? sec.getSectionContent().replaceAll("#+\\s*", "")
                         : "Section content pending.";
                 Paragraph secBody = new Paragraph(cleanContent, bodyFont);
+                secBody.setLeading(15f);
                 secBody.setSpacingAfter(15);
                 doc.add(secBody);
             }
