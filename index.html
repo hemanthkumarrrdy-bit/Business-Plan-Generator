@@ -43,40 +43,44 @@
 <body class="bg-[#0B1020] text-[#F8FAFC] min-h-screen flex flex-col custom-scrollbar">
 
   <!-- Top Navigation Header -->
-  <header class="sticky top-0 z-50 bg-[#11182B]/90 backdrop-blur-md border-b border-[#273449] px-6 py-3.5 flex items-center justify-between">
-    <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('landing')">
+  <header class="sticky top-0 z-50 bg-[#11182B]/95 backdrop-blur-md border-b border-[#273449] px-6 py-3.5 flex items-center justify-between">
+    <div class="flex items-center space-x-3 cursor-pointer" onclick="scrollToSection('hero')">
       <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#7C5CFC] to-[#3B82F6] flex items-center justify-center shadow-lg shadow-[#7C5CFC]/20">
         <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
       </div>
       <div>
-        <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
-          Business Plan Generator
-        </span>
-        <span class="hidden sm:inline-block ml-2 text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full bg-[#7C5CFC]/20 text-[#7C5CFC] border border-[#7C5CFC]/30">
-          AI 2.0
-        </span>
+        <div class="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent flex items-center space-x-2">
+          <span>Business Plan Generator</span>
+          <span class="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full bg-[#7C5CFC]/20 text-[#7C5CFC] border border-[#7C5CFC]/30">AI 2.0</span>
+        </div>
+        <p class="text-[10px] text-[#94A3B8] -mt-0.5 hidden sm:block">Turn Your Business Idea Into a Winning Plan</p>
       </div>
     </div>
 
-    <!-- Nav Links -->
-    <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-[#94A3B8]">
-      <button onclick="switchView('landing')" class="hover:text-white transition">Home</button>
-      <button onclick="switchView('dashboard')" class="hover:text-white transition">Dashboard</button>
-      <button onclick="switchView('wizard')" class="hover:text-white transition">Create Plan</button>
-      <button onclick="switchView('templates')" class="hover:text-white transition">Templates</button>
-      <button onclick="switchView('pricing')" class="hover:text-white transition">Pricing</button>
-      <button onclick="switchView('admin')" class="hover:text-white transition">Admin</button>
+    <!-- Website Marketing Nav Links -->
+    <nav class="hidden lg:flex items-center space-x-6 text-xs xl:text-sm font-medium text-[#94A3B8]">
+      <button onclick="scrollToSection('hero')" class="hover:text-white transition">Home</button>
+      <button onclick="scrollToSection('features')" class="hover:text-white transition">Features</button>
+      <button onclick="scrollToSection('how-it-works')" class="hover:text-white transition">How It Works</button>
+      <button onclick="scrollToSection('product-preview')" class="hover:text-white transition">Product Demo</button>
+      <button onclick="scrollToSection('financials-section')" class="hover:text-white transition">Financials</button>
+      <button onclick="scrollToSection('templates-section')" class="hover:text-white transition">Templates</button>
+      <button onclick="scrollToSection('pricing-section')" class="hover:text-white transition">Pricing</button>
+      <button onclick="scrollToSection('faq-section')" class="hover:text-white transition">FAQ</button>
     </nav>
 
     <!-- Header Actions -->
     <div class="flex items-center space-x-3">
-      <div class="hidden sm:flex items-center px-3 py-1.5 rounded-lg bg-[#0B1020] border border-[#273449] text-xs text-[#94A3B8]">
-        <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400 mr-1.5"></i>
-        <span>Credits: <strong id="creditsDisplay" class="text-white">25</strong></span>
-      </div>
-      <button onclick="switchView('wizard')" class="px-4 py-2 rounded-lg bg-gradient-to-r from-[#7C5CFC] to-[#3B82F6] hover:opacity-95 text-white text-xs font-semibold shadow-md shadow-[#7C5CFC]/25 transition flex items-center space-x-1.5">
+      <button onclick="switchView('dashboard')" class="hidden sm:flex items-center px-3 py-1.5 rounded-lg bg-[#0B1020] hover:bg-[#1A2338] border border-[#273449] text-xs font-medium text-slate-300 transition space-x-1.5">
+        <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 text-[#7C5CFC]"></i>
+        <span>Dashboard</span>
+      </button>
+      <button onclick="openAuthModal()" class="px-3.5 py-1.5 rounded-lg border border-[#273449] hover:border-slate-400 text-xs font-medium text-slate-200 transition">
+        Sign In
+      </button>
+      <button onclick="switchView('wizard')" class="px-4 py-2 rounded-xl bg-gradient-to-r from-[#7C5CFC] to-[#3B82F6] hover:opacity-95 text-white text-xs font-semibold shadow-md shadow-[#7C5CFC]/25 transition flex items-center space-x-1.5">
         <i data-lucide="plus" class="w-4 h-4"></i>
-        <span>New Plan</span>
+        <span>Generate Plan</span>
       </button>
     </div>
   </header>
@@ -84,42 +88,89 @@
   <!-- Notification Toast Container -->
   <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col space-y-2 pointer-events-none"></div>
 
+  <!-- Sign In / Sign Up Modal -->
+  <div id="authModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-[#11182B] border border-[#273449] rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#7C5CFC] to-[#3B82F6] mx-auto flex items-center justify-center text-white mb-3 shadow-lg shadow-[#7C5CFC]/20">
+          <i data-lucide="lock" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white" id="authTitle">Welcome to Business Plan Generator</h3>
+        <p class="text-xs text-[#94A3B8] mt-1">Sign in to save, sync, and export your investor-ready plans.</p>
+      </div>
+      <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-[#94A3B8] mb-1">Email Address</label>
+          <input type="email" id="authEmail" required value="alex.morgan@startup.io" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" placeholder="you@company.com">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-[#94A3B8] mb-1">Password</label>
+          <input type="password" id="authPassword" required value="Password123!" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" placeholder="••••••••">
+        </div>
+        <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-[#7C5CFC] to-[#3B82F6] hover:opacity-95 text-white text-sm font-semibold shadow-lg shadow-[#7C5CFC]/20 transition">
+          Sign In & Access Studio
+        </button>
+      </form>
+      <div class="mt-4 text-center">
+        <button type="button" onclick="quickDemoAuth()" class="text-xs text-[#7C5CFC] hover:underline font-medium">
+          Instant Demo Access (Alex Morgan) &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MAIN APP ROUTING CONTAINERS -->
   <main class="flex-1 flex flex-col">
 
     <!-- ================================================================ -->
-    <!-- VIEW 1: LANDING PAGE -->
+    <!-- VIEW 1: FULL MARKETING & PRODUCT WEBSITE -->
     <!-- ================================================================ -->
     <section id="view-landing" class="view-panel block">
-      <!-- Hero Section -->
-      <div class="relative overflow-hidden pt-16 pb-20 bg-gradient-radial">
+      
+      <!-- 1. Hero Section -->
+      <div id="hero" class="relative overflow-hidden pt-16 pb-24 bg-gradient-radial border-b border-[#273449]/40">
         <div class="max-w-6xl mx-auto px-6 text-center">
           <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#11182B] border border-[#273449] text-xs text-[#94A3B8] mb-6 shadow-inner">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>AI-Powered Full-Stack Architecture — Java 21 & React</span>
+            <span>AI-Powered Full-Stack Engine • Java 21 & React SaaS</span>
           </div>
-          <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-tight">
+          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-tight">
             Your Business Idea Deserves a <span class="bg-gradient-to-r from-[#7C5CFC] via-[#3B82F6] to-cyan-400 bg-clip-text text-transparent">Winning Plan.</span>
           </h1>
-          <p class="mt-6 text-lg sm:text-xl text-[#94A3B8] max-w-2xl mx-auto font-normal">
-            Turn your business ideas into investor-ready business plans, complete 5-year financial projections, and actionable growth roadmaps in minutes.
+          <p class="mt-6 text-lg sm:text-xl text-[#94A3B8] max-w-2xl mx-auto font-normal leading-relaxed">
+            Turn your ideas into professional business plans, 5-year financial projections, and actionable growth strategies with AI in minutes.
           </p>
 
-          <!-- Interactive Quick Idea Input -->
-          <div class="mt-10 max-w-2xl mx-auto p-2 bg-[#11182B] border border-[#273449] rounded-2xl shadow-2xl flex flex-col sm:flex-row gap-2">
+          <!-- Interactive Quick Idea Input Box -->
+          <div class="mt-10 max-w-2xl mx-auto p-2.5 bg-[#11182B] border border-[#273449] rounded-2xl shadow-2xl flex flex-col sm:flex-row gap-2">
             <div class="flex-1 flex items-center px-4 py-2">
               <i data-lucide="lightbulb" class="w-5 h-5 text-[#7C5CFC] mr-3 shrink-0"></i>
               <input id="quickIdeaInput" type="text" placeholder="e.g. AI-driven logistics tracker for urban couriers" 
                      class="w-full bg-transparent border-none outline-none text-white text-sm placeholder-[#64748B]" />
             </div>
-            <button onclick="handleQuickGenerate()" class="px-6 py-3 rounded-xl bg-[#7C5CFC] hover:bg-[#6A4BE2] text-white text-sm font-semibold shadow-lg shadow-[#7C5CFC]/30 transition shrink-0 flex items-center justify-center space-x-2">
+            <button onclick="handleQuickGenerate()" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#7C5CFC] to-[#3B82F6] hover:opacity-95 text-white text-sm font-semibold shadow-lg shadow-[#7C5CFC]/30 transition shrink-0 flex items-center justify-center space-x-2">
               <span>Generate My Plan</span>
               <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </button>
           </div>
 
-          <!-- Quick Badges -->
-          <div class="mt-8 flex flex-wrap justify-center gap-6 text-xs text-[#94A3B8]">
+          <!-- Quick Action Buttons -->
+          <div class="mt-6 flex flex-wrap justify-center gap-4">
+            <button onclick="switchView('wizard')" class="px-6 py-3 rounded-xl bg-[#7C5CFC] hover:bg-[#6A4BE2] text-white text-sm font-semibold shadow-lg shadow-[#7C5CFC]/25 transition flex items-center space-x-2">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i>
+              <span>Generate My Business Plan</span>
+            </button>
+            <button onclick="scrollToSection('features')" class="px-6 py-3 rounded-xl bg-[#11182B] hover:bg-[#1A2338] border border-[#273449] text-white text-sm font-semibold transition flex items-center space-x-2">
+              <i data-lucide="compass" class="w-4 h-4 text-[#3B82F6]"></i>
+              <span>Explore Features</span>
+            </button>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="mt-10 flex flex-wrap justify-center gap-6 text-xs text-[#94A3B8]">
             <span class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mr-1.5"></i> 30 Detailed Plan Sections</span>
             <span class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mr-1.5"></i> Java BigDecimal Financial Engine</span>
             <span class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mr-1.5"></i> Instant PDF & DOCX Export</span>
@@ -128,41 +179,581 @@
         </div>
       </div>
 
-      <!-- Feature Grid Preview -->
-      <div class="py-16 max-w-6xl mx-auto px-6">
-        <div class="text-center mb-12">
-          <h2 class="text-2xl sm:text-3xl font-bold text-white">Engineered for Startup Founders & Small Businesses</h2>
-          <p class="text-[#94A3B8] mt-2 text-sm">Everything you need to pitch investors, obtain bank loans, and scale.</p>
+      <!-- 2. Interactive Live Product Studio Preview -->
+      <div id="product-preview" class="py-16 max-w-6xl mx-auto px-6">
+        <div class="text-center mb-10">
+          <span class="text-xs uppercase font-bold tracking-wider text-[#7C5CFC] px-3 py-1 rounded-full bg-[#7C5CFC]/10 border border-[#7C5CFC]/20">Interactive Studio Preview</span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3">See Your Future Business Plan in Action</h2>
+          <p class="text-[#94A3B8] mt-2 text-sm max-w-xl mx-auto">Explore this live sample plan for <strong class="text-white">ApexHealth AI</strong> generated by our AI engine and financial model.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="p-6 rounded-2xl bg-[#11182B] border border-[#273449] hover:border-[#7C5CFC]/50 transition group">
-            <div class="w-12 h-12 rounded-xl bg-[#7C5CFC]/10 flex items-center justify-center text-[#7C5CFC] mb-4 group-hover:scale-110 transition">
-              <i data-lucide="cpu" class="w-6 h-6"></i>
+        <!-- Preview Mockup Container -->
+        <div class="bg-[#11182B] border border-[#273449] rounded-2xl shadow-2xl overflow-hidden">
+          <!-- Window Header -->
+          <div class="px-5 py-3.5 bg-[#0B1020] border-b border-[#273449] flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+              <span class="text-xs text-[#94A3B8] font-mono ml-2">ApexHealth_AI_Business_Plan.pdf</span>
             </div>
-            <h3 class="text-lg font-semibold text-white mb-2">30-Section AI Generation</h3>
-            <p class="text-sm text-[#94A3B8] leading-relaxed">Executive summary, SWOT, competitor matrix, PESTLE analysis, go-to-market plan, and team structure tailored to your business.</p>
+            <div class="flex items-center space-x-2">
+              <button onclick="switchView('editor')" class="px-3 py-1 rounded-lg bg-[#7C5CFC] hover:bg-[#6A4BE2] text-white text-xs font-semibold transition flex items-center space-x-1.5">
+                <span>Open in Full Studio Editor</span>
+                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
           </div>
 
-          <div class="p-6 rounded-2xl bg-[#11182B] border border-[#273449] hover:border-[#3B82F6]/50 transition group">
-            <div class="w-12 h-12 rounded-xl bg-[#3B82F6]/10 flex items-center justify-center text-[#3B82F6] mb-4 group-hover:scale-110 transition">
-              <i data-lucide="trending-up" class="w-6 h-6"></i>
-            </div>
-            <h3 class="text-lg font-semibold text-white mb-2">Accurate Financial Engine</h3>
-            <p class="text-sm text-[#94A3B8] leading-relaxed">Calculated purely via Java BigDecimal. Includes Break-even analysis, 3-scenario projections, cash runway, and EBITDA forecast.</p>
+          <!-- Preview Tabs -->
+          <div class="flex border-b border-[#273449] bg-[#11182B] text-xs font-medium text-[#94A3B8] overflow-x-auto">
+            <button onclick="switchPreviewTab('exec')" id="tab-exec" class="px-5 py-3 text-white border-b-2 border-[#7C5CFC] font-semibold flex items-center space-x-1.5 shrink-0">
+              <i data-lucide="file-text" class="w-3.5 h-3.5 text-[#7C5CFC]"></i>
+              <span>1. Executive Summary</span>
+            </button>
+            <button onclick="switchPreviewTab('swot')" id="tab-swot" class="px-5 py-3 hover:text-white border-b-2 border-transparent flex items-center space-x-1.5 shrink-0">
+              <i data-lucide="shield" class="w-3.5 h-3.5 text-blue-400"></i>
+              <span>11. SWOT Analysis</span>
+            </button>
+            <button onclick="switchPreviewTab('fin')" id="tab-fin" class="px-5 py-3 hover:text-white border-b-2 border-transparent flex items-center space-x-1.5 shrink-0">
+              <i data-lucide="bar-chart-3" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span>16. Financial Forecast</span>
+            </button>
+            <button onclick="switchPreviewTab('roadmap')" id="tab-roadmap" class="px-5 py-3 hover:text-white border-b-2 border-transparent flex items-center space-x-1.5 shrink-0">
+              <i data-lucide="milestone" class="w-3.5 h-3.5 text-amber-400"></i>
+              <span>24. Implementation Roadmap</span>
+            </button>
           </div>
 
-          <div class="p-6 rounded-2xl bg-[#11182B] border border-[#273449] hover:border-emerald-500/50 transition group">
-            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-110 transition">
-              <i data-lucide="file-down" class="w-6 h-6"></i>
+          <!-- Preview Tab Content -->
+          <div class="p-6 sm:p-8 min-h-[280px]">
+            <!-- Tab 1: Executive Summary -->
+            <div id="previewContent-exec" class="block space-y-4">
+              <div class="flex items-center justify-between pb-3 border-b border-[#273449]">
+                <h3 class="text-lg font-bold text-white">ApexHealth AI — Executive Summary</h3>
+                <span class="text-xs px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">Investor Ready</span>
+              </div>
+              <p class="text-sm text-[#94A3B8] leading-relaxed">
+                <strong class="text-white">ApexHealth AI</strong> is an enterprise software solution transforming clinical diagnostics through autonomous triage workflows. Operating in the Healthcare & MedTech sector with initial headquarters in the United States, the platform addresses diagnostic bottlenecks for over 45,000 regional clinics.
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div class="p-4 rounded-xl bg-[#0B1020] border border-[#273449]">
+                  <span class="text-xs text-[#94A3B8]">Target Market (TAM)</span>
+                  <p class="text-lg font-bold text-white mt-1">$14.2 Billion</p>
+                  <span class="text-[11px] text-emerald-400">22% Annual Growth</span>
+                </div>
+                <div class="p-4 rounded-xl bg-[#0B1020] border border-[#273449]">
+                  <span class="text-xs text-[#94A3B8]">Initial Funding Needed</span>
+                  <p class="text-lg font-bold text-white mt-1">$250,000</p>
+                  <span class="text-[11px] text-[#3B82F6]">18-Month Runway</span>
+                </div>
+                <div class="p-4 rounded-xl bg-[#0B1020] border border-[#273449]">
+                  <span class="text-xs text-[#94A3B8]">Break-Even Target</span>
+                  <p class="text-lg font-bold text-white mt-1">Month 14</p>
+                  <span class="text-[11px] text-amber-400">3,450 Paying Seats</span>
+                </div>
+              </div>
             </div>
-            <h3 class="text-lg font-semibold text-white mb-2">Export to PDF & DOCX</h3>
-            <p class="text-sm text-[#94A3B8] leading-relaxed">Download official executive reports formatted with custom cover pages, headers, footers, tables, and page numbering.</p>
+
+            <!-- Tab 2: SWOT Analysis -->
+            <div id="previewContent-swot" class="hidden space-y-4">
+              <h3 class="text-lg font-bold text-white pb-2 border-b border-[#273449]">SWOT Matrix Framework</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="p-4 rounded-xl bg-[#0B1020] border border-emerald-500/30">
+                  <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Strengths</h4>
+                  <ul class="text-xs text-[#94A3B8] space-y-1.5 list-disc list-inside">
+                    <li>Proprietary automated clinical triage algorithms.</li>
+                    <li>HIPAA & ISO-27001 compliant cloud infrastructure.</li>
+                    <li>Strong founder domain expertise in MedTech.</li>
+                  </ul>
+                </div>
+                <div class="p-4 rounded-xl bg-[#0B1020] border border-amber-500/30">
+                  <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">Weaknesses</h4>
+                  <ul class="text-xs text-[#94A3B8] space-y-1.5 list-disc list-inside">
+                    <li>High early sales cycle length (3-6 months per hospital network).</li>
+                    <li>Dependence on enterprise cloud compute credits.</li>
+                  </ul>
+                </div>
+                <div class="p-4 rounded-xl bg-[#0B1020] border border-blue-500/30">
+                  <h4 class="text-xs font-bold text-blue-400 uppercase tracking-wider mb-2">Opportunities</h4>
+                  <ul class="text-xs text-[#94A3B8] space-y-1.5 list-disc list-inside">
+                    <li>Expansion into telehealth networks across EU & APAC.</li>
+                    <li>Integration into Epic and Cerner EHR marketplaces.</li>
+                  </ul>
+                </div>
+                <div class="p-4 rounded-xl bg-[#0B1020] border border-rose-500/30">
+                  <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wider mb-2">Threats</h4>
+                  <ul class="text-xs text-[#94A3B8] space-y-1.5 list-disc list-inside">
+                    <li>Evolving FDA medical AI regulatory compliance guidelines.</li>
+                    <li>Incumbent EHR vendors launching in-house workflow tools.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 3: Financial Forecast -->
+            <div id="previewContent-fin" class="hidden space-y-4">
+              <div class="flex items-center justify-between pb-2 border-b border-[#273449]">
+                <h3 class="text-lg font-bold text-white">5-Year Growth Projections</h3>
+                <span class="text-xs text-[#94A3B8]">Powered by Java BigDecimal Engine</span>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                  <thead class="text-[#94A3B8] border-b border-[#273449]">
+                    <tr>
+                      <th class="py-2.5">Financial Metric</th>
+                      <th class="py-2.5">Year 1</th>
+                      <th class="py-2.5">Year 2</th>
+                      <th class="py-2.5">Year 3</th>
+                      <th class="py-2.5">Year 4</th>
+                      <th class="py-2.5 text-right">Year 5</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-[#273449]/50 text-slate-200">
+                    <tr>
+                      <td class="py-2.5 font-medium text-white">Gross Revenue</td>
+                      <td class="py-2.5">$180,000</td>
+                      <td class="py-2.5">$396,000</td>
+                      <td class="py-2.5">$792,000</td>
+                      <td class="py-2.5">$1,425,000</td>
+                      <td class="py-2.5 text-right font-bold text-emerald-400">$2,422,000</td>
+                    </tr>
+                    <tr>
+                      <td class="py-2.5 font-medium text-white">Operating Expenses</td>
+                      <td class="py-2.5">$120,000</td>
+                      <td class="py-2.5">$190,000</td>
+                      <td class="py-2.5">$310,000</td>
+                      <td class="py-2.5">$520,000</td>
+                      <td class="py-2.5 text-right">$810,000</td>
+                    </tr>
+                    <tr>
+                      <td class="py-2.5 font-medium text-white">EBITDA / Net Profit</td>
+                      <td class="py-2.5 text-rose-400">-$35,000</td>
+                      <td class="py-2.5 text-emerald-400">+$62,000</td>
+                      <td class="py-2.5 text-emerald-400">+$214,000</td>
+                      <td class="py-2.5 text-emerald-400">+$492,000</td>
+                      <td class="py-2.5 text-right font-bold text-emerald-400">+$960,000</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Tab 4: Roadmap -->
+            <div id="previewContent-roadmap" class="hidden space-y-4">
+              <h3 class="text-lg font-bold text-white pb-2 border-b border-[#273449]">Implementation Milestones</h3>
+              <div class="space-y-3">
+                <div class="p-3.5 rounded-xl bg-[#0B1020] border border-[#273449] flex items-center justify-between">
+                  <div class="flex items-center space-x-3">
+                    <span class="w-7 h-7 rounded-lg bg-[#7C5CFC]/20 text-[#7C5CFC] flex items-center justify-center font-bold text-xs">Q1</span>
+                    <span class="text-xs font-semibold text-white">MVP Cloud Release & HIPAA Certification</span>
+                  </div>
+                  <span class="text-[11px] text-emerald-400 font-medium">Completed</span>
+                </div>
+                <div class="p-3.5 rounded-xl bg-[#0B1020] border border-[#273449] flex items-center justify-between">
+                  <div class="flex items-center space-x-3">
+                    <span class="w-7 h-7 rounded-lg bg-[#3B82F6]/20 text-[#3B82F6] flex items-center justify-center font-bold text-xs">Q2</span>
+                    <span class="text-xs font-semibold text-white">First 10 Clinic Pilot Deployments</span>
+                  </div>
+                  <span class="text-[11px] text-amber-400 font-medium">In Progress</span>
+                </div>
+                <div class="p-3.5 rounded-xl bg-[#0B1020] border border-[#273449] flex items-center justify-between">
+                  <div class="flex items-center space-x-3">
+                    <span class="w-7 h-7 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold text-xs">Q3</span>
+                    <span class="text-xs font-semibold text-white">Series Seed Fundraise ($1.5M Target)</span>
+                  </div>
+                  <span class="text-[11px] text-[#94A3B8] font-medium">Upcoming</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
 
+      <!-- 3. Features Section -->
+      <div id="features" class="py-20 border-t border-[#273449]/40 bg-[#0B1020]">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="text-center mb-14">
+            <span class="text-xs uppercase font-bold tracking-wider text-[#7C5CFC] px-3 py-1 rounded-full bg-[#7C5CFC]/10 border border-[#7C5CFC]/20">Why Choose Us</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3">Engineered for Founders, Startups & Lenders</h2>
+            <p class="text-[#94A3B8] mt-2 text-sm max-w-xl mx-auto">Everything required to pitch venture capitalists, apply for bank loans, and launch with conviction.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-7 rounded-2xl bg-[#11182B] border border-[#273449] hover:border-[#7C5CFC]/50 transition group">
+              <div class="w-12 h-12 rounded-xl bg-[#7C5CFC]/10 flex items-center justify-center text-[#7C5CFC] mb-4 group-hover:scale-110 transition">
+                <i data-lucide="cpu" class="w-6 h-6"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">30-Section AI Generation</h3>
+              <p class="text-sm text-[#94A3B8] leading-relaxed">Comprehensive business blueprints covering Executive Summary, TAM/SAM/SOM, Go-To-Market, SWOT matrix, and unit economics.</p>
+            </div>
+
+            <div class="p-7 rounded-2xl bg-[#11182B] border border-[#273449] hover:border-[#3B82F6]/50 transition group">
+              <div class="w-12 h-12 rounded-xl bg-[#3B82F6]/10 flex items-center justify-center text-[#3B82F6] mb-4 group-hover:scale-110 transition">
+                <i data-lucide="calculator" class="w-6 h-6"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">Java BigDecimal Precision</h3>
+              <p class="text-sm text-[#94A3B8] leading-relaxed">Exact arithmetic without floating-point errors. Calculates Break-Even points, monthly burn rate, cash runway, and 5-year CAGR forecasts.</p>
+            </div>
+
+            <div class="p-7 rounded-2xl bg-[#11182B] border border-[#273449] hover:border-emerald-500/50 transition group">
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-110 transition">
+                <i data-lucide="file-check-2" class="w-6 h-6"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">Executive PDF & DOCX Export</h3>
+              <p class="text-sm text-[#94A3B8] leading-relaxed">Download institutional-grade documents with custom cover pages, automatic table of contents, and clean typographic layouts.</p>
+            </div>
+
+            <div class="p-7 rounded-2xl bg-[#11182B] border border-[#273449] hover:border-amber-500/50 transition group">
+              <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 mb-4 group-hover:scale-110 transition">
+                <i data-lucide="message-square" class="w-6 h-6"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">AI Copilot & Section Refinement</h3>
+              <p class="text-sm text-[#94A3B8] leading-relaxed">Iterate on any section in real time. Instruct the AI copilot to shorten, expand, or recalibrate tone for bank underwriters or VCs.</p>
+            </div>
+
+            <div class="p-7 rounded-2xl bg-[#11182B] border border-[#273449] hover:border-purple-500/50 transition group">
+              <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition">
+                <i data-lucide="sliders" class="w-6 h-6"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">3-Scenario Sensitivity Analysis</h3>
+              <p class="text-sm text-[#94A3B8] leading-relaxed">Model Conservative (80%), Base (100%), and Aggressive (140%) market conditions instantly to stress-test financial resilience.</p>
+            </div>
+
+            <div class="p-7 rounded-2xl bg-[#11182B] border border-[#273449] hover:border-cyan-500/50 transition group">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">SBA & Bank Loan Compliant</h3>
+              <p class="text-sm text-[#94A3B8] leading-relaxed">Structured specifically to fulfill loan underwriting checklists for Small Business Administration (SBA) 7(a) and commercial bank loans.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. How It Works Section -->
+      <div id="how-it-works" class="py-20 border-t border-[#273449]/40 bg-[#11182B]/60">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="text-center mb-14">
+            <span class="text-xs uppercase font-bold tracking-wider text-[#3B82F6] px-3 py-1 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20">Step-by-Step Workflow</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3">From Business Idea to Investor Ready in 4 Steps</h2>
+            <p class="text-[#94A3B8] mt-2 text-sm max-w-xl mx-auto">No prior business writing or financial modeling background needed.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="p-6 rounded-2xl bg-[#0B1020] border border-[#273449] relative">
+              <div class="w-10 h-10 rounded-xl bg-[#7C5CFC] text-white flex items-center justify-center font-bold text-sm mb-4 shadow-lg shadow-[#7C5CFC]/20">01</div>
+              <h3 class="text-base font-bold text-white mb-2">Input Idea & Market</h3>
+              <p class="text-xs text-[#94A3B8] leading-relaxed">Answer a structured 5-step wizard covering your business model, customer segments, pricing, and initial capital.</p>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-[#0B1020] border border-[#273449] relative">
+              <div class="w-10 h-10 rounded-xl bg-[#3B82F6] text-white flex items-center justify-center font-bold text-sm mb-4 shadow-lg shadow-[#3B82F6]/20">02</div>
+              <h3 class="text-base font-bold text-white mb-2">AI Synthesizes Plan</h3>
+              <p class="text-xs text-[#94A3B8] leading-relaxed">The AI engine drafts all 30 deep sections complete with market analysis, competitive positioning, and operational risks.</p>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-[#0B1020] border border-[#273449] relative">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-sm mb-4 shadow-lg shadow-emerald-500/20">03</div>
+              <h3 class="text-base font-bold text-white mb-2">Calibrate Financials</h3>
+              <p class="text-xs text-[#94A3B8] leading-relaxed">View exact Break-Even points, monthly cash flow charts, and 5-year CAGR forecasts powered by Java BigDecimal.</p>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-[#0B1020] border border-[#273449] relative">
+              <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold text-sm mb-4 shadow-lg shadow-amber-500/20">04</div>
+              <h3 class="text-base font-bold text-white mb-2">Export & Pitch</h3>
+              <p class="text-xs text-[#94A3B8] leading-relaxed">Export formatted PDF reports and editable DOCX files ready to submit to banks, accelerators, and angel syndicates.</p>
+            </div>
+          </div>
+
+          <div class="mt-12 text-center">
+            <button onclick="switchView('wizard')" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#7C5CFC] to-[#3B82F6] hover:opacity-95 text-white text-sm font-semibold shadow-lg shadow-[#7C5CFC]/30 transition inline-flex items-center space-x-2">
+              <span>Start Your Plan Now</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Interactive Financial Showcase Section -->
+      <div id="financials-section" class="py-20 border-t border-[#273449]/40 bg-[#0B1020]">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="flex flex-col lg:flex-row items-center gap-12">
+            <div class="lg:w-1/2 space-y-5">
+              <span class="text-xs uppercase font-bold tracking-wider text-emerald-400 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">Institutional Accuracy</span>
+              <h2 class="text-2xl sm:text-4xl font-extrabold text-white leading-tight">Financial Projections Banks & Investors Trust</h2>
+              <p class="text-sm text-[#94A3B8] leading-relaxed">
+                Most AI tools create fabricated numbers with rounding errors. Our financial calculations are computed via <strong class="text-white">Java BigDecimal</strong>, ensuring accounting compliance across all cash flow statements, EBITDA schedules, and break-even milestones.
+              </p>
+              <div class="space-y-3 pt-2">
+                <div class="flex items-start space-x-3">
+                  <div class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-semibold text-white">Dynamic Break-Even Analysis</h4>
+                    <p class="text-[11px] text-[#94A3B8]">Calculates fixed costs, variable margins, and the precise month and unit volume required for profitability.</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <div class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-semibold text-white">3-Scenario Sensitivity Modeling</h4>
+                    <p class="text-[11px] text-[#94A3B8]">View conservative, moderate, and hyper-growth scenarios with one click.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Financial Card Graphic -->
+            <div class="lg:w-1/2 w-full bg-[#11182B] border border-[#273449] rounded-2xl p-6 shadow-2xl">
+              <div class="flex items-center justify-between pb-4 border-b border-[#273449]">
+                <div>
+                  <h3 class="text-sm font-bold text-white">Year 1 Monthly Cash Flow Forecast</h3>
+                  <p class="text-[11px] text-[#94A3B8]">Revenue vs. Monthly Operating Expenses</p>
+                </div>
+                <div class="flex items-center space-x-3 text-[11px]">
+                  <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-sm bg-[#7C5CFC] mr-1.5"></span> Revenue</span>
+                  <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-sm bg-rose-500 mr-1.5"></span> OpEx</span>
+                </div>
+              </div>
+
+              <!-- Bar Chart Demo -->
+              <div class="h-44 flex items-end gap-2 pt-6 pb-2" id="websiteChartMockup">
+                <!-- Dynamically generated bars -->
+              </div>
+              <div class="flex justify-between text-[10px] text-[#94A3B8] pt-2 border-t border-[#273449]">
+                <span>M1</span><span>M2</span><span>M3</span><span>M4</span><span>M5</span><span>M6</span><span>M7</span><span>M8</span><span>M9</span><span>M10</span><span>M11</span><span>M12</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Templates Showcase Section -->
+      <div id="templates-section" class="py-20 border-t border-[#273449]/40 bg-[#11182B]/60">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="text-center mb-12">
+            <span class="text-xs uppercase font-bold tracking-wider text-[#7C5CFC] px-3 py-1 rounded-full bg-[#7C5CFC]/10 border border-[#7C5CFC]/20">Turnkey Frameworks</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3">14 Tested Business Plan Templates</h2>
+            <p class="text-[#94A3B8] mt-2 text-sm max-w-xl mx-auto">Select your sector to pre-populate verified financial ratios, TAM estimates, and competitive wedges.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="websiteTemplatesGrid">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Pricing Section -->
+      <div id="pricing-section" class="py-20 border-t border-[#273449]/40 bg-[#0B1020]">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="text-center mb-14">
+            <span class="text-xs uppercase font-bold tracking-wider text-[#7C5CFC] px-3 py-1 rounded-full bg-[#7C5CFC]/10 border border-[#7C5CFC]/20">Simple & Transparent</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3">Invest in Your Business's Foundation</h2>
+            <p class="text-[#94A3B8] mt-2 text-sm max-w-xl mx-auto">Generate comprehensive plans with no recurring lock-in. Powered by Razorpay secure checkout.</p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Free Starter -->
+            <div class="p-8 rounded-2xl bg-[#11182B] border border-[#273449] flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Free Starter</span>
+                <div class="mt-4 flex items-baseline">
+                  <span class="text-4xl font-extrabold text-white">₹0</span>
+                  <span class="text-xs text-[#94A3B8] ml-2">/ forever</span>
+                </div>
+                <p class="text-xs text-[#94A3B8] mt-3">Ideal for brainstorming and early idea validation.</p>
+                <div class="my-6 border-t border-[#273449]"></div>
+                <ul class="space-y-3 text-xs text-slate-300">
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> 1 Full Business Plan</li>
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> 30 Detailed Strategic Sections</li>
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> Basic Financial Projections</li>
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> Web Document Viewer</li>
+                </ul>
+              </div>
+              <button onclick="switchView('wizard')" class="mt-8 w-full py-3 rounded-xl bg-[#0B1020] hover:bg-[#1A2338] border border-[#273449] text-xs font-semibold text-white transition">
+                Start Free Plan
+              </button>
+            </div>
+
+            <!-- Pro Founder (Featured) -->
+            <div class="p-8 rounded-2xl bg-[#11182B] border-2 border-[#7C5CFC] flex flex-col justify-between relative shadow-2xl shadow-[#7C5CFC]/20">
+              <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-to-r from-[#7C5CFC] to-[#3B82F6] text-[10px] font-bold text-white uppercase tracking-wider shadow">Most Popular</span>
+              <div>
+                <span class="text-xs font-bold text-[#7C5CFC] uppercase tracking-wider">Pro Founder</span>
+                <div class="mt-4 flex items-baseline">
+                  <span class="text-4xl font-extrabold text-white">₹1,499</span>
+                  <span class="text-xs text-[#94A3B8] ml-2">/ one-time</span>
+                </div>
+                <p class="text-xs text-[#94A3B8] mt-3">For founders pitching investors or applying for bank loans.</p>
+                <div class="my-6 border-t border-[#273449]"></div>
+                <ul class="space-y-3 text-xs text-slate-300">
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> Unlimited Business Plans</li>
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> Complete 5-Year Financial Forecasts</li>
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> Executive PDF & DOCX Downloads</li>
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> Interactive AI Section Copilot</li>
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> 14 Industry Templates Included</li>
+                </ul>
+              </div>
+              <button onclick="triggerRazorpayCheckout('Pro Founder', 1499)" class="mt-8 w-full py-3 rounded-xl bg-gradient-to-r from-[#7C5CFC] to-[#3B82F6] hover:opacity-95 text-xs font-semibold text-white shadow-lg shadow-[#7C5CFC]/30 transition">
+                Get Pro Founder Access
+              </button>
+            </div>
+
+            <!-- Venture Team -->
+            <div class="p-8 rounded-2xl bg-[#11182B] border border-[#273449] flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Venture Agency</span>
+                <div class="mt-4 flex items-baseline">
+                  <span class="text-4xl font-extrabold text-white">₹4,999</span>
+                  <span class="text-xs text-[#94A3B8] ml-2">/ one-time</span>
+                </div>
+                <p class="text-xs text-[#94A3B8] mt-3">For agencies, incubators, and multiple portfolio companies.</p>
+                <div class="my-6 border-t border-[#273449]"></div>
+                <ul class="space-y-3 text-xs text-slate-300">
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> Everything in Pro Founder</li>
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> White-Label Custom PDF Branding</li>
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> Unlimited AI Rewrite Tokens</li>
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> Multi-User Team Sharing</li>
+                  <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2 shrink-0"></i> Dedicated Priority Support</li>
+                </ul>
+              </div>
+              <button onclick="triggerRazorpayCheckout('Venture Agency', 4999)" class="mt-8 w-full py-3 rounded-xl bg-[#0B1020] hover:bg-[#1A2338] border border-[#273449] text-xs font-semibold text-white transition">
+                Upgrade to Agency
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. FAQ Section -->
+      <div id="faq-section" class="py-20 border-t border-[#273449]/40 bg-[#11182B]/60">
+        <div class="max-w-4xl mx-auto px-6">
+          <div class="text-center mb-14">
+            <span class="text-xs uppercase font-bold tracking-wider text-[#3B82F6] px-3 py-1 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20">Frequently Asked Questions</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3">Everything You Need to Know</h2>
+            <p class="text-[#94A3B8] mt-2 text-sm">Have a question? We have answers.</p>
+          </div>
+
+          <div class="space-y-4" id="faqAccordion">
+            <div class="p-5 rounded-2xl bg-[#0B1020] border border-[#273449] cursor-pointer" onclick="toggleFaq(1)">
+              <div class="flex items-center justify-between">
+                <h4 class="text-sm font-semibold text-white">Can I use this business plan to apply for an SBA or bank loan?</h4>
+                <i data-lucide="chevron-down" id="faq-icon-1" class="w-4 h-4 text-[#94A3B8] transition-transform"></i>
+              </div>
+              <div id="faq-content-1" class="hidden text-xs text-[#94A3B8] mt-3 leading-relaxed border-t border-[#273449]/40 pt-3">
+                Yes. The generated plans follow standard SBA loan guidelines and commercial bank requirements, including executive summary, management breakdown, market viability, break-even analysis, and 5-year financial schedules.
+              </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-[#0B1020] border border-[#273449] cursor-pointer" onclick="toggleFaq(2)">
+              <div class="flex items-center justify-between">
+                <h4 class="text-sm font-semibold text-white">How accurate are the financial calculations?</h4>
+                <i data-lucide="chevron-down" id="faq-icon-2" class="w-4 h-4 text-[#94A3B8] transition-transform"></i>
+              </div>
+              <div id="faq-content-2" class="hidden text-xs text-[#94A3B8] mt-3 leading-relaxed border-t border-[#273449]/40 pt-3">
+                Our financial calculations are not estimated text generated by an LLM. They are computed on the backend using Java 21's BigDecimal class, ensuring zero floating-point errors across startup cost allocations, break-even unit volumes, and multi-year CAGR models.
+              </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-[#0B1020] border border-[#273449] cursor-pointer" onclick="toggleFaq(3)">
+              <div class="flex items-center justify-between">
+                <h4 class="text-sm font-semibold text-white">Can I edit and customize the plan after it is generated?</h4>
+                <i data-lucide="chevron-down" id="faq-icon-3" class="w-4 h-4 text-[#94A3B8] transition-transform"></i>
+              </div>
+              <div id="faq-content-3" class="hidden text-xs text-[#94A3B8] mt-3 leading-relaxed border-t border-[#273449]/40 pt-3">
+                Absolutely. The built-in 3-column Document Studio allows you to click into any of the 30 sections, edit markdown in real time, ask the AI Copilot to refine specific paragraphs, and download the finished result as an editable Microsoft Word (.docx) or PDF document.
+              </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-[#0B1020] border border-[#273449] cursor-pointer" onclick="toggleFaq(4)">
+              <div class="flex items-center justify-between">
+                <h4 class="text-sm font-semibold text-white">Do I need an OpenAI or Google Gemini API key to use this?</h4>
+                <i data-lucide="chevron-down" id="faq-icon-4" class="w-4 h-4 text-[#94A3B8] transition-transform"></i>
+              </div>
+              <div id="faq-content-4" class="hidden text-xs text-[#94A3B8] mt-3 leading-relaxed border-t border-[#273449]/40 pt-3">
+                No API key is required. The platform operates seamlessly in autonomous demo mode with comprehensive pre-trained generation templates, or with a cloud Gemini API key configured securely in the backend environment.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. Final High-Converting CTA Banner -->
+      <div class="py-20 bg-gradient-radial border-t border-[#273449]">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
+            Ready to Turn Your Business Idea Into a Winning Plan?
+          </h2>
+          <p class="mt-4 text-sm sm:text-base text-[#94A3B8] max-w-xl mx-auto">
+            Join thousands of entrepreneurs, startups, and small business owners who transformed their ideas into funded ventures.
+          </p>
+          <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <button onclick="switchView('wizard')" class="px-8 py-4 rounded-xl bg-gradient-to-r from-[#7C5CFC] to-[#3B82F6] hover:opacity-95 text-white text-sm font-bold shadow-xl shadow-[#7C5CFC]/30 transition flex items-center space-x-2">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>Generate My Business Plan Now</span>
+            </button>
+            <button onclick="switchView('dashboard')" class="px-6 py-4 rounded-xl bg-[#11182B] hover:bg-[#1A2338] border border-[#273449] text-white text-sm font-semibold transition">
+              View Sample Plans
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. Comprehensive Website Footer -->
+      <footer class="bg-[#0B1020] border-t border-[#273449] py-16 text-xs text-[#94A3B8]">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-5 gap-8">
+          <div class="col-span-2 space-y-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#7C5CFC] to-[#3B82F6] flex items-center justify-center text-white">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+              </div>
+              <span class="font-bold text-base text-white">Business Plan Generator</span>
+            </div>
+            <p class="text-xs text-[#94A3B8] leading-relaxed max-w-sm">
+              The premier AI-powered business planning engine for entrepreneurs, startups, and advisors. Engineered with Java 21, Spring Boot, and React.
+            </p>
+            <p class="text-[11px] text-slate-500">© 2026 Business Plan Generator. All rights reserved.</p>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-white uppercase tracking-wider text-[11px] mb-3">Product</h4>
+            <ul class="space-y-2">
+              <li><button onclick="scrollToSection('hero')" class="hover:text-white transition">Home</button></li>
+              <li><button onclick="scrollToSection('features')" class="hover:text-white transition">Features</button></li>
+              <li><button onclick="scrollToSection('how-it-works')" class="hover:text-white transition">How It Works</button></li>
+              <li><button onclick="scrollToSection('financials-section')" class="hover:text-white transition">Financial Engine</button></li>
+              <li><button onclick="scrollToSection('pricing-section')" class="hover:text-white transition">Pricing</button></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-white uppercase tracking-wider text-[11px] mb-3">Templates</h4>
+            <ul class="space-y-2">
+              <li><button onclick="useTemplate('SaaS Platform', 'Tech')" class="hover:text-white transition">SaaS & Software</button></li>
+              <li><button onclick="useTemplate('E-Commerce Brand', 'Retail')" class="hover:text-white transition">E-Commerce</button></li>
+              <li><button onclick="useTemplate('AI Medical Diagnostics', 'Healthcare')" class="hover:text-white transition">Healthcare</button></li>
+              <li><button onclick="useTemplate('Fintech NeoBank', 'Fintech')" class="hover:text-white transition">Fintech</button></li>
+              <li><button onclick="scrollToSection('templates-section')" class="hover:text-white transition">All 14 Templates &rarr;</button></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-white uppercase tracking-wider text-[11px] mb-3">Legal & Trust</h4>
+            <ul class="space-y-2">
+              <li class="hover:text-white cursor-pointer" onclick="showToast('SBA loan compliance standard applied.')">SBA Compliance</li>
+              <li class="hover:text-white cursor-pointer" onclick="showToast('Your business plans are encrypted & private.')">Privacy Policy</li>
+              <li class="hover:text-white cursor-pointer" onclick="showToast('Terms of Service: Standard SaaS license.')">Terms of Service</li>
+              <li class="hover:text-white cursor-pointer" onclick="switchView('admin')">Admin Panel</li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+
+    </section>
 
     <!-- ================================================================ -->
     <!-- VIEW 2: DASHBOARD -->
@@ -846,7 +1437,130 @@
       activePlan = samplePlans[0];
       loadPlanIntoEditor(activePlan);
       renderSvgChart();
+      renderWebsiteComponents();
     });
+
+    // --- Website Smooth Scrolling & Section Navigation ---
+    function scrollToSection(sectionId) {
+      switchView("landing");
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 50);
+    }
+
+    // --- Interactive Studio Preview Tabs ---
+    function switchPreviewTab(tabKey) {
+      const tabs = ["exec", "swot", "fin", "roadmap"];
+      tabs.forEach(t => {
+        const btn = document.getElementById("tab-" + t);
+        const content = document.getElementById("previewContent-" + t);
+        if (btn) {
+          if (t === tabKey) {
+            btn.className = "px-5 py-3 text-white border-b-2 border-[#7C5CFC] font-semibold flex items-center space-x-1.5 shrink-0";
+          } else {
+            btn.className = "px-5 py-3 hover:text-white border-b-2 border-transparent flex items-center space-x-1.5 shrink-0";
+          }
+        }
+        if (content) {
+          content.classList.toggle("hidden", t !== tabKey);
+          content.classList.toggle("block", t === tabKey);
+        }
+      });
+      lucide.createIcons();
+    }
+
+    // --- FAQ Accordion Toggle ---
+    function toggleFaq(id) {
+      const content = document.getElementById("faq-content-" + id);
+      const icon = document.getElementById("faq-icon-" + id);
+      if (content) {
+        const isHidden = content.classList.contains("hidden");
+        content.classList.toggle("hidden", !isHidden);
+        if (icon) {
+          icon.style.transform = isHidden ? "rotate(180deg)" : "rotate(0deg)";
+        }
+      }
+    }
+
+    // --- Auth Modal Handlers ---
+    function openAuthModal() {
+      const modal = document.getElementById("authModal");
+      if (modal) modal.classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeAuthModal() {
+      const modal = document.getElementById("authModal");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById("authEmail").value;
+      closeAuthModal();
+      showToast(`Signed in successfully as ${email}`);
+      switchView("dashboard");
+    }
+
+    function quickDemoAuth() {
+      closeAuthModal();
+      showToast("Signed in as Alex Morgan (Pro Founder Demo)");
+      switchView("dashboard");
+    }
+
+    // --- Render Website Homepage Components ---
+    function renderWebsiteComponents() {
+      // 1. Render Homepage Chart Mockup
+      const chartContainer = document.getElementById("websiteChartMockup");
+      if (chartContainer) {
+        chartContainer.innerHTML = "";
+        const revHeights = [30, 42, 55, 68, 80, 95, 110, 120, 130, 140, 150, 165];
+        const opexHeights = [55, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76];
+        revHeights.forEach((rev, idx) => {
+          const col = document.createElement("div");
+          col.className = "flex-1 flex flex-col items-center h-full justify-end";
+          col.innerHTML = `
+            <div class="w-full flex items-end justify-center gap-1 h-36">
+              <div class="w-2.5 sm:w-3.5 bg-gradient-to-t from-[#7C5CFC] to-[#3B82F6] rounded-t hover:opacity-90 transition" style="height: ${rev}px" title="Revenue: $${rev * 100}"></div>
+              <div class="w-2.5 sm:w-3.5 bg-rose-500/80 rounded-t hover:opacity-90 transition" style="height: ${opexHeights[idx]}px" title="OpEx: $${opexHeights[idx] * 100}"></div>
+            </div>
+          `;
+          chartContainer.appendChild(col);
+        });
+      }
+
+      // 2. Render Featured Templates on Homepage
+      const websiteTemplates = document.getElementById("websiteTemplatesGrid");
+      if (websiteTemplates) {
+        websiteTemplates.innerHTML = "";
+        const featured = templatesData.slice(0, 6);
+        featured.forEach(t => {
+          const card = document.createElement("div");
+          card.className = "p-6 rounded-2xl bg-[#0B1020] border border-[#273449] hover:border-[#7C5CFC]/50 transition flex flex-col justify-between group";
+          card.innerHTML = `
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-10 h-10 rounded-xl bg-[#7C5CFC]/10 text-[#7C5CFC] flex items-center justify-center group-hover:scale-110 transition">
+                  <i data-lucide="${t.icon}" class="w-5 h-5"></i>
+                </div>
+                <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-[#11182B] text-[#94A3B8] border border-[#273449]">${t.tag}</span>
+              </div>
+              <h3 class="text-base font-bold text-white mb-1.5">${t.name}</h3>
+              <p class="text-xs text-[#94A3B8] leading-relaxed">${t.desc}</p>
+            </div>
+            <button onclick="useTemplate('${t.name}', '${t.tag}')" class="mt-6 w-full py-2.5 rounded-xl bg-[#11182B] hover:bg-[#7C5CFC] border border-[#273449] hover:border-transparent text-xs font-semibold text-white transition flex items-center justify-center space-x-1.5">
+              <span>Use Template & Generate</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+          `;
+          websiteTemplates.appendChild(card);
+        });
+      }
+      lucide.createIcons();
+    }
 
     // --- Navigation & View Switching ---
     function switchView(viewName) {
