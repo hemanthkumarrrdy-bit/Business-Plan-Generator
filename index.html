@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Plan Generator — Turn Your Business Idea Into a Winning Plan</title>
+  <!-- Tailwind CSS via allowlisted CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0B1020;
+      color: #F8FAFC;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #11182B;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #273449;
+      border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #7C5CFC;
+    }
+    .bg-gradient-radial {
+      background: radial-gradient(circle at 50% 0%, rgba(124, 92, 252, 0.15) 0%, transparent 60%);
+    }
+  </style>
+</head>
+<body class="bg-[#0B1020] text-[#F8FAFC] min-h-screen flex flex-col custom-scrollbar">
+
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-50 bg-[#11182B]/90 backdrop-blur-md border-b border-[#273449] px-6 py-3.5 flex items-center justify-between">
+    <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('landing')">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#7C5CFC] to-[#3B82F6] flex items-center justify-center shadow-lg shadow-[#7C5CFC]/20">
+        <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+      </div>
+      <div>
+        <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
+          Business Plan Generator
+        </span>
+        <span class="hidden sm:inline-block ml-2 text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full bg-[#7C5CFC]/20 text-[#7C5CFC] border border-[#7C5CFC]/30">
+          AI 2.0
+        </span>
+      </div>
+    </div>
+
+    <!-- Nav Links -->
+    <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-[#94A3B8]">
+      <button onclick="switchView('landing')" class="hover:text-white transition">Home</button>
+      <button onclick="switchView('dashboard')" class="hover:text-white transition">Dashboard</button>
+      <button onclick="switchView('wizard')" class="hover:text-white transition">Create Plan</button>
+      <button onclick="switchView('templates')" class="hover:text-white transition">Templates</button>
+      <button onclick="switchView('pricing')" class="hover:text-white transition">Pricing</button>
+      <button onclick="switchView('admin')" class="hover:text-white transition">Admin</button>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="flex items-center space-x-3">
+      <div class="hidden sm:flex items-center px-3 py-1.5 rounded-lg bg-[#0B1020] border border-[#273449] text-xs text-[#94A3B8]">
+        <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400 mr-1.5"></i>
+        <span>Credits: <strong id="creditsDisplay" class="text-white">25</strong></span>
+      </div>
+      <button onclick="switchView('wizard')" class="px-4 py-2 rounded-lg bg-gradient-to-r from-[#7C5CFC] to-[#3B82F6] hover:opacity-95 text-white text-xs font-semibold shadow-md shadow-[#7C5CFC]/25 transition flex items-center space-x-1.5">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        <span>New Plan</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Notification Toast Container -->
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+  <!-- MAIN APP ROUTING CONTAINERS -->
+  <main class="flex-1 flex flex-col">
+
+    <!-- ================================================================ -->
+    <!-- VIEW 1: LANDING PAGE -->
+    <!-- ================================================================ -->
+    <section id="view-landing" class="view-panel block">
+      <!-- Hero Section -->
+      <div class="relative overflow-hidden pt-16 pb-20 bg-gradient-radial">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+          <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#11182B] border border-[#273449] text-xs text-[#94A3B8] mb-6 shadow-inner">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>AI-Powered Full-Stack Architecture — Java 21 & React</span>
+          </div>
+          <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-tight">
+            Your Business Idea Deserves a <span class="bg-gradient-to-r from-[#7C5CFC] via-[#3B82F6] to-cyan-400 bg-clip-text text-transparent">Winning Plan.</span>
+          </h1>
+          <p class="mt-6 text-lg sm:text-xl text-[#94A3B8] max-w-2xl mx-auto font-normal">
+            Turn your business ideas into investor-ready business plans, complete 5-year financial projections, and actionable growth roadmaps in minutes.
+          </p>
+
+          <!-- Interactive Quick Idea Input -->
+          <div class="mt-10 max-w-2xl mx-auto p-2 bg-[#11182B] border border-[#273449] rounded-2xl shadow-2xl flex flex-col sm:flex-row gap-2">
+            <div class="flex-1 flex items-center px-4 py-2">
+              <i data-lucide="lightbulb" class="w-5 h-5 text-[#7C5CFC] mr-3 shrink-0"></i>
+              <input id="quickIdeaInput" type="text" placeholder="e.g. AI-driven logistics tracker for urban couriers" 
+                     class="w-full bg-transparent border-none outline-none text-white text-sm placeholder-[#64748B]" />
+            </div>
+            <button onclick="handleQuickGenerate()" class="px-6 py-3 rounded-xl bg-[#7C5CFC] hover:bg-[#6A4BE2] text-white text-sm font-semibold shadow-lg shadow-[#7C5CFC]/30 transition shrink-0 flex items-center justify-center space-x-2">
+              <span>Generate My Plan</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Quick Badges -->
+          <div class="mt-8 flex flex-wrap justify-center gap-6 text-xs text-[#94A3B8]">
+            <span class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mr-1.5"></i> 30 Detailed Plan Sections</span>
+            <span class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mr-1.5"></i> Java BigDecimal Financial Engine</span>
+            <span class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mr-1.5"></i> Instant PDF & DOCX Export</span>
+            <span class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mr-1.5"></i> Razorpay & Demo Mode Ready</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Grid Preview -->
+      <div class="py-16 max-w-6xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-2xl sm:text-3xl font-bold text-white">Engineered for Startup Founders & Small Businesses</h2>
+          <p class="text-[#94A3B8] mt-2 text-sm">Everything you need to pitch investors, obtain bank loans, and scale.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-6 rounded-2xl bg-[#11182B] border border-[#273449] hover:border-[#7C5CFC]/50 transition group">
+            <div class="w-12 h-12 rounded-xl bg-[#7C5CFC]/10 flex items-center justify-center text-[#7C5CFC] mb-4 group-hover:scale-110 transition">
+              <i data-lucide="cpu" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">30-Section AI Generation</h3>
+            <p class="text-sm text-[#94A3B8] leading-relaxed">Executive summary, SWOT, competitor matrix, PESTLE analysis, go-to-market plan, and team structure tailored to your business.</p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-[#11182B] border border-[#273449] hover:border-[#3B82F6]/50 transition group">
+            <div class="w-12 h-12 rounded-xl bg-[#3B82F6]/10 flex items-center justify-center text-[#3B82F6] mb-4 group-hover:scale-110 transition">
+              <i data-lucide="trending-up" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Accurate Financial Engine</h3>
+            <p class="text-sm text-[#94A3B8] leading-relaxed">Calculated purely via Java BigDecimal. Includes Break-even analysis, 3-scenario projections, cash runway, and EBITDA forecast.</p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-[#11182B] border border-[#273449] hover:border-emerald-500/50 transition group">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-110 transition">
+              <i data-lucide="file-down" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Export to PDF & DOCX</h3>
+            <p class="text-sm text-[#94A3B8] leading-relaxed">Download official executive reports formatted with custom cover pages, headers, footers, tables, and page numbering.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================ -->
+    <!-- VIEW 2: DASHBOARD -->
+    <!-- ================================================================ -->
+    <section id="view-dashboard" class="view-panel hidden flex-1 py-8 px-6 max-w-7xl mx-auto w-full">
+      <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-[#273449] gap-4">
+        <div>
+          <h1 class="text-2xl font-bold text-white">Welcome back, Alex Morgan</h1>
+          <p class="text-[#94A3B8] text-sm mt-1">Manage, edit, and export your active business plans.</p>
+        </div>
+        <button onclick="switchView('wizard')" class="px-4 py-2.5 rounded-xl bg-[#7C5CFC] hover:bg-[#6A4BE2] text-white text-sm font-semibold shadow-lg shadow-[#7C5CFC]/20 flex items-center space-x-2 transition self-start md:self-auto">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          <span>Create New Business Plan</span>
+        </button>
+      </div>
+
+      <!-- Dashboard Stats -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 my-8">
+        <div class="p-5 rounded-2xl bg-[#11182B] border border-[#273449]">
+          <div class="flex items-center justify-between text-[#94A3B8] text-xs font-medium">
+            <span>TOTAL PLANS</span>
+            <i data-lucide="folder" class="w-4 h-4 text-[#7C5CFC]"></i>
+          </div>
+          <p class="text-2xl font-bold text-white mt-2" id="statTotalPlans">2</p>
+          <span class="text-xs text-emerald-400 flex items-center mt-1"><i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mr-0.5"></i> All synchronized</span>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-[#11182B] border border-[#273449]">
+          <div class="flex items-center justify-between text-[#94A3B8] text-xs font-medium">
+            <span>COMPLETED PLANS</span>
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+          </div>
+          <p class="text-2xl font-bold text-white mt-2">2</p>
+          <span class="text-xs text-[#94A3B8] mt-1">30 sections each</span>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-[#11182B] border border-[#273449]">
+          <div class="flex items-center justify-between text-[#94A3B8] text-xs font-medium">
+            <span>AVAILABLE CREDITS</span>
+            <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i>
+          </div>
+          <p class="text-2xl font-bold text-white mt-2" id="statCredits">25</p>
+          <span class="text-xs text-[#7C5CFC] hover:underline cursor-pointer" onclick="switchView('pricing')">Upgrade to Pro &rarr;</span>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-[#11182B] border border-[#273449]">
+          <div class="flex items-center justify-between text-[#94A3B8] text-xs font-medium">
+            <span>CURRENT SUBSCRIPTION</span>
+            <i data-lucide="shield-check" class="w-4 h-4 text-[#3B82F6]"></i>
+          </div>
+          <p class="text-2xl font-bold text-white mt-2">Starter Plan</p>
+          <span class="text-xs text-emerald-400">Active & Verified</span>
+        </div>
+      </div>
+
+      <!-- Recent Business Plans List -->
+      <div class="bg-[#11182B] border border-[#273449] rounded-2xl overflow-hidden shadow-xl mb-10">
+        <div class="p-5 border-b border-[#273449] flex items-center justify-between">
+          <h2 class="text-base font-semibold text-white flex items-center">
+            <i data-lucide="file-text" class="w-4 h-4 text-[#7C5CFC] mr-2"></i>
+            My Business Plans
+          </h2>
+          <span class="text-xs text-[#94A3B8]">Click any plan to open full editor</span>
+        </div>
+
+        <div class="divide-y divide-[#273449]" id="plansList">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================ -->
+    <!-- VIEW 3: 5-STEP CREATION WIZARD -->
+    <!-- ================================================================ -->
+    <section id="view-wizard" class="view-panel hidden flex-1 py-10 px-6 max-w-4xl mx-auto w-full">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-extrabold text-white">Create Your Business Plan</h1>
+        <p class="text-[#94A3B8] text-sm mt-1">Complete the 5 steps below to generate your complete AI business plan and financial model.</p>
+      </div>
+
+      <!-- Step Indicator -->
+      <div class="flex items-center justify-between mb-8 px-2 max-w-2xl mx-auto">
+        <div class="step-indicator active flex flex-col items-center" data-step="1">
+          <div class="w-9 h-9 rounded-full bg-[#7C5CFC] text-white flex items-center justify-center text-sm font-semibold shadow-lg shadow-[#7C5CFC]/30">1</div>
+          <span class="text-[11px] text-[#94A3B8] mt-1 font-medium">Idea</span>
+        </div>
+        <div class="flex-1 h-0.5 bg-[#273449] mx-2"></div>
+        <div class="step-indicator flex flex-col items-center" data-step="2">
+          <div class="w-9 h-9 rounded-full bg-[#1A2338] text-[#94A3B8] flex items-center justify-center text-sm font-semibold border border-[#273449]">2</div>
+          <span class="text-[11px] text-[#94A3B8] mt-1 font-medium">Market</span>
+        </div>
+        <div class="flex-1 h-0.5 bg-[#273449] mx-2"></div>
+        <div class="step-indicator flex flex-col items-center" data-step="3">
+          <div class="w-9 h-9 rounded-full bg-[#1A2338] text-[#94A3B8] flex items-center justify-center text-sm font-semibold border border-[#273449]">3</div>
+          <span class="text-[11px] text-[#94A3B8] mt-1 font-medium">Model</span>
+        </div>
+        <div class="flex-1 h-0.5 bg-[#273449] mx-2"></div>
+        <div class="step-indicator flex flex-col items-center" data-step="4">
+          <div class="w-9 h-9 rounded-full bg-[#1A2338] text-[#94A3B8] flex items-center justify-center text-sm font-semibold border border-[#273449]">4</div>
+          <span class="text-[11px] text-[#94A3B8] mt-1 font-medium">Financials</span>
+        </div>
+        <div class="flex-1 h-0.5 bg-[#273449] mx-2"></div>
+        <div class="step-indicator flex flex-col items-center" data-step="5">
+          <div class="w-9 h-9 rounded-full bg-[#1A2338] text-[#94A3B8] flex items-center justify-center text-sm font-semibold border border-[#273449]">5</div>
+          <span class="text-[11px] text-[#94A3B8] mt-1 font-medium">Preferences</span>
+        </div>
+      </div>
+
+      <!-- Step Cards Container -->
+      <div class="bg-[#11182B] border border-[#273449] rounded-2xl p-6 sm:p-8 shadow-2xl">
+        <!-- STEP 1: BUSINESS IDEA -->
+        <div id="step-1" class="wizard-step block space-y-4">
+          <h2 class="text-xl font-bold text-white border-b border-[#273449] pb-3 flex items-center">
+            <i data-lucide="lightbulb" class="w-5 h-5 text-[#7C5CFC] mr-2"></i> Step 1: Business Overview
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Business Name *</label>
+              <input id="wizName" type="text" value="ApexHealth AI" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" placeholder="e.g. Acme Corp" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Industry *</label>
+              <select id="wizIndustry" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none">
+                <option value="Healthcare & MedTech" selected>Healthcare & MedTech</option>
+                <option value="SaaS & Cloud Software">SaaS & Cloud Software</option>
+                <option value="E-Commerce & Retail">E-Commerce & Retail</option>
+                <option value="AI & Machine Learning">AI & Machine Learning</option>
+                <option value="Fintech & Payments">Fintech & Payments</option>
+                <option value="Restaurant & Hospitality">Restaurant & Hospitality</option>
+                <option value="Consulting & Agency">Consulting & Agency</option>
+                <option value="Manufacturing">Manufacturing</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Business Type</label>
+              <select id="wizType" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none">
+                <option value="Startup" selected>Startup</option>
+                <option value="SaaS">SaaS</option>
+                <option value="E-commerce">E-commerce</option>
+                <option value="Service business">Service business</option>
+                <option value="Manufacturing">Manufacturing</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Development Stage</label>
+              <select id="wizStage" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none">
+                <option value="Idea Stage">Idea Stage</option>
+                <option value="Prototype / MVP" selected>Prototype / MVP</option>
+                <option value="Early Revenue">Early Revenue</option>
+                <option value="Scaling / Growth">Scaling / Growth</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Detailed Business Description *</label>
+            <textarea id="wizDesc" rows="3" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl p-3 text-sm text-white focus:border-[#7C5CFC] outline-none" placeholder="Describe the problem, solution, and core product offering...">AI-driven clinical diagnostics assistant automating radiology pre-screening, reducing radiologist triage time by 45% with HIPAA-compliant infrastructure.</textarea>
+          </div>
+        </div>
+
+        <!-- STEP 2: TARGET MARKET -->
+        <div id="step-2" class="wizard-step hidden space-y-4">
+          <h2 class="text-xl font-bold text-white border-b border-[#273449] pb-3 flex items-center">
+            <i data-lucide="users" class="w-5 h-5 text-[#3B82F6] mr-2"></i> Step 2: Target Market & Competition
+          </h2>
+          <div>
+            <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Target Audience & Buyer Persona</label>
+            <input id="wizAudience" type="text" value="Hospital diagnostic departments, private radiology clinics, and telehealth networks" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Customer Pain Points</label>
+            <textarea id="wizPainPoints" rows="2" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl p-3 text-sm text-white focus:border-[#7C5CFC] outline-none">Severe radiologist shortages leading to 3-day triage delays and burnout from manual image annotation.</textarea>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Known Competitors</label>
+              <input id="wizCompetitors" type="text" value="Aidoc, Zebra Medical Vision, RadNet AI" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Geographic Focus</label>
+              <input id="wizGeo" type="text" value="United States and Europe" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" />
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: BUSINESS MODEL -->
+        <div id="step-3" class="wizard-step hidden space-y-4">
+          <h2 class="text-xl font-bold text-white border-b border-[#273449] pb-3 flex items-center">
+            <i data-lucide="layers" class="w-5 h-5 text-amber-400 mr-2"></i> Step 3: Business Model & Strategy
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Revenue Model</label>
+              <input id="wizRevenueModel" type="text" value="B2B SaaS Annual Subscriptions + Usage-based scan fees" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Pricing Strategy</label>
+              <input id="wizPricing" type="text" value="Tiered licensing: $1,200/mo clinic tier, $4,500/mo hospital tier" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Unique Selling Proposition (USP)</label>
+            <input id="wizUsp" type="text" value="Zero-friction PACS integration with FDA clearance readiness and 99.4% triage accuracy" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Distribution Channels</label>
+            <input id="wizChannels" type="text" value="Direct enterprise medical sales, medical equipment distributor partnerships" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" />
+          </div>
+        </div>
+
+        <!-- STEP 4: FINANCIAL INPUTS -->
+        <div id="step-4" class="wizard-step hidden space-y-4">
+          <h2 class="text-xl font-bold text-white border-b border-[#273449] pb-3 flex items-center">
+            <i data-lucide="calculator" class="w-5 h-5 text-emerald-400 mr-2"></i> Step 4: Financial Inputs & Projections
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Initial Capital / Investment ($)</label>
+              <input id="wizInvestment" type="number" value="75000" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Monthly Operating Expenses ($)</label>
+              <input id="wizOpex" type="number" value="8500" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Average Selling Price per Unit/Sub ($)</label>
+              <input id="wizPrice" type="number" value="1200" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Variable Cost per Unit ($)</label>
+              <input id="wizVarCost" type="number" value="150" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Expected Monthly Sales (Units)</label>
+              <input id="wizSales" type="number" value="25" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Forecast Horizon</label>
+              <select id="wizDuration" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none">
+                <option value="3 years" selected>3 Years Forecast</option>
+                <option value="5 years">5 Years Forecast</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 5: PREFERENCES -->
+        <div id="step-5" class="wizard-step hidden space-y-4">
+          <h2 class="text-xl font-bold text-white border-b border-[#273449] pb-3 flex items-center">
+            <i data-lucide="sliders" class="w-5 h-5 text-purple-400 mr-2"></i> Step 5: Report Preferences
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Primary Purpose</label>
+              <select id="wizPurpose" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none">
+                <option value="Investor Presentation" selected>Investor Presentation / Venture Capital</option>
+                <option value="Bank Loan">Bank Loan / SBA Financing</option>
+                <option value="Startup Launch">Internal Startup Launch Strategy</option>
+                <option value="Business Expansion">Commercial Business Expansion</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Writing Tone & Style</label>
+              <select id="wizStyle" class="w-full bg-[#0B1020] border border-[#273449] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#7C5CFC] outline-none">
+                <option value="Executive & Institutional" selected>Executive & Institutional</option>
+                <option value="Data-Dense & Analytical">Data-Dense & Analytical</option>
+                <option value="Action-Oriented & Modern">Action-Oriented & Modern</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Section Checklist -->
+          <div class="pt-3">
+            <span class="block text-xs font-medium text-[#94A3B8] mb-2">Sections to Include:</span>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs text-white">
+              <label class="flex items-center space-x-2"><input type="checkbox" checked disabled class="accent-[#7C5CFC]"><span>Executive Summary</span></label>
+              <label class="flex items-center space-x-2"><input type="checkbox" checked disabled class="accent-[#7C5CFC]"><span>Market Research</span></label>
+              <label class="flex items-center space-x-2"><input type="checkbox" checked disabled class="accent-[#7C5CFC]"><span>Competitor Analysis</span></label>
+              <label class="flex items-center space-x-2"><input type="checkbox" checked disabled class="accent-[#7C5CFC]"><span>SWOT Framework</span></label>
+              <label class="flex items-center space-x-2"><input type="checkbox" checked disabled class="accent-[#7C5CFC]"><span>Financial Models</span></label>
+              <label class="flex items-center space-x-2"><input type="checkbox" checked disabled class="accent-[#7C5CFC]"><span>Roadmap (30 Sections)</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wizard Navigation Footer -->
+        <div class="flex items-center justify-between pt-6 mt-6 border-t border-[#273449]">
+          <button id="wizPrevBtn" onclick="prevWizardStep()" class="hidden px-5 py-2.5 rounded-xl bg-[#0B1020] hover:bg-[#1A2338] border border-[#273449] text-xs font-semibold text-white transition">
+            Back
+          </button>
+          <div></div>
+          <button id="wizNextBtn" onclick="nextWizardStep()" class="px-6 py-2.5 rounded-xl bg-[#7C5CFC] hover:bg-[#6A4BE2] text-xs font-semibold text-white shadow-lg shadow-[#7C5CFC]/25 transition flex items-center space-x-1.5">
+            <span>Continue</span>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+          <button id="wizSubmitBtn" onclick="triggerPlanGeneration()" class="hidden px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#7C5CFC] to-[#3B82F6] hover:opacity-95 text-xs font-bold text-white shadow-lg shadow-[#7C5CFC]/30 transition flex items-center space-x-2">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <span>Generate Business Plan</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================ -->
+    <!-- VIEW 4: PLAN EDITOR & WORKSPACE -->
+    <!-- ================================================================ -->
+    <section id="view-editor" class="view-panel hidden flex-1 flex flex-col h-[calc(100vh-65px)] overflow-hidden">
+      <!-- Editor Top Action Bar -->
+      <div class="bg-[#11182B] border-b border-[#273449] px-6 py-3 flex flex-wrap items-center justify-between gap-3 shrink-0">
+        <div class="flex items-center space-x-3">
+          <button onclick="switchView('dashboard')" class="p-1.5 rounded-lg bg-[#0B1020] border border-[#273449] text-[#94A3B8] hover:text-white transition">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          </button>
+          <div>
+            <h2 id="editorPlanTitle" class="text-base font-bold text-white">NexusFlow AI</h2>
+            <div class="flex items-center space-x-2 text-[11px] text-[#94A3B8]">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span id="editorStatus">Status: All 30 Sections Saved</span>
+              <span>•</span>
+              <span id="editorSaveIndicator" class="text-slate-400">Autosave enabled</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <!-- Real Export Buttons -->
+          <button onclick="downloadPdf()" class="px-3.5 py-1.5 rounded-lg bg-[#0B1020] hover:bg-[#1A2338] border border-[#273449] text-xs font-medium text-white transition flex items-center space-x-1.5">
+            <i data-lucide="file-text" class="w-3.5 h-3.5 text-rose-400"></i>
+            <span>Export PDF</span>
+          </button>
+          <button onclick="downloadDocx()" class="px-3.5 py-1.5 rounded-lg bg-[#0B1020] hover:bg-[#1A2338] border border-[#273449] text-xs font-medium text-white transition flex items-center space-x-1.5">
+            <i data-lucide="file-edit" class="w-3.5 h-3.5 text-[#3B82F6]"></i>
+            <span>Export DOCX</span>
+          </button>
+          <button onclick="saveCurrentSection()" class="px-4 py-1.5 rounded-lg bg-[#7C5CFC] hover:bg-[#6A4BE2] text-xs font-semibold text-white shadow-md shadow-[#7C5CFC]/20 transition flex items-center space-x-1">
+            <i data-lucide="save" class="w-3.5 h-3.5"></i>
+            <span>Save Section</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Editor 3-Column Workspace -->
+      <div class="flex-1 flex overflow-hidden">
+        <!-- 1. LEFT SIDEBAR: 30 Plan Sections Navigator -->
+        <aside class="w-72 bg-[#11182B]/60 border-r border-[#273449] flex flex-col shrink-0">
+          <div class="p-3 border-b border-[#273449] flex items-center justify-between">
+            <span class="text-xs font-semibold text-[#94A3B8] uppercase tracking-wider">Plan Sections (30)</span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-medium">Complete</span>
+          </div>
+          <div id="sectionNavigator" class="flex-1 overflow-y-auto p-2 space-y-1 custom-scrollbar text-xs">
+            <!-- Dynamically populated sections list -->
+          </div>
+        </aside>
+
+        <!-- 2. MAIN WORKSPACE: Active Section Editor + Financial Visualizer -->
+        <div class="flex-1 flex flex-col bg-[#0B1020] overflow-y-auto custom-scrollbar p-6">
+          <!-- Financial Preview Bar (Collapsible / Toggleable) -->
+          <div id="financialQuickBar" class="mb-6 p-4 rounded-xl bg-[#11182B] border border-[#273449] grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div>
+              <span class="text-[10px] text-[#94A3B8] uppercase block">Break-Even Point</span>
+              <strong id="barBreakEven" class="text-sm font-bold text-white">83 Units/Mo ($10,000)</strong>
+            </div>
+            <div>
+              <span class="text-[10px] text-[#94A3B8] uppercase block">Year 1 Net Profit</span>
+              <strong id="barY1Profit" class="text-sm font-bold text-emerald-400">$84,600</strong>
+            </div>
+            <div>
+              <span class="text-[10px] text-[#94A3B8] uppercase block">Gross Margin</span>
+              <strong id="barGrossMargin" class="text-sm font-bold text-purple-400">75.0%</strong>
+            </div>
+            <div>
+              <span class="text-[10px] text-[#94A3B8] uppercase block">Cash Runway</span>
+              <strong id="barRunway" class="text-sm font-bold text-cyan-400">8.8 Months</strong>
+            </div>
+          </div>
+
+          <!-- Section Toolbar -->
+          <div class="flex items-center justify-between pb-3 mb-3 border-b border-[#273449]">
+            <div class="flex items-center space-x-2">
+              <span id="activeSectionBadge" class="text-[11px] font-semibold px-2 py-0.5 rounded bg-[#7C5CFC]/20 text-[#7C5CFC] border border-[#7C5CFC]/30">Section 1</span>
+              <h3 id="activeSectionTitle" class="text-lg font-bold text-white">Executive Summary</h3>
+            </div>
+
+            <!-- AI Section Assistants -->
+            <div class="flex items-center space-x-1.5 text-xs">
+              <span class="text-[#94A3B8] text-[11px] hidden sm:inline mr-1">AI Rewrite:</span>
+              <button onclick="aiRewriteSection('investor-ready')" class="px-2.5 py-1 rounded bg-[#11182B] hover:bg-[#1A2338] border border-[#273449] text-[#94A3B8] hover:text-white transition">Investor Pitch</button>
+              <button onclick="aiRewriteSection('bank-loan')" class="px-2.5 py-1 rounded bg-[#11182B] hover:bg-[#1A2338] border border-[#273449] text-[#94A3B8] hover:text-white transition">Bank Loan</button>
+              <button onclick="aiRewriteSection('expand')" class="px-2.5 py-1 rounded bg-[#11182B] hover:bg-[#1A2338] border border-[#273449] text-[#94A3B8] hover:text-white transition">Expand</button>
+              <button onclick="aiRewriteSection('regenerate')" class="px-2.5 py-1 rounded bg-[#7C5CFC]/20 hover:bg-[#7C5CFC]/30 text-[#7C5CFC] border border-[#7C5CFC]/40 transition flex items-center">
+                <i data-lucide="refresh-cw" class="w-3 h-3 mr-1"></i> Regenerate
+              </button>
+            </div>
+          </div>
+
+          <!-- Section Rich Textarea -->
+          <div class="flex-1 flex flex-col bg-[#11182B] border border-[#273449] rounded-xl p-4 shadow-inner min-h-[350px]">
+            <textarea id="sectionEditorContent" class="flex-1 bg-transparent text-white text-sm font-normal leading-relaxed outline-none border-none resize-none custom-scrollbar" oninput="handleSectionInput()"></textarea>
+            <div class="mt-2 pt-2 border-t border-[#273449] flex items-center justify-between text-[11px] text-[#94A3B8]">
+              <span id="wordCount">0 words</span>
+              <span>Markdown supported</span>
+            </div>
+          </div>
+
+          <!-- Visual Financial Charts (Integrated into plan workspace) -->
+          <div class="mt-6 p-5 rounded-xl bg-[#11182B] border border-[#273449]">
+            <div class="flex items-center justify-between mb-4">
+              <h4 class="text-sm font-semibold text-white flex items-center">
+                <i data-lucide="bar-chart-3" class="w-4 h-4 text-[#3B82F6] mr-2"></i>
+                12-Month Projected Revenue vs Operating Expenses
+              </h4>
+              <span class="text-xs text-[#94A3B8]">Java Engine Calculations</span>
+            </div>
+            <!-- Custom SVG Financial Chart -->
+            <div class="h-44 w-full flex items-end justify-between gap-2 pt-4 px-2" id="svgChartContainer">
+              <!-- Dynamically populated chart bars -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. RIGHT SIDEBAR: AI Startup Advisor Chat -->
+        <aside class="w-80 bg-[#11182B]/60 border-l border-[#273449] flex flex-col shrink-0">
+          <div class="p-3 border-b border-[#273449] flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <div class="w-6 h-6 rounded-md bg-[#7C5CFC] flex items-center justify-center">
+                <i data-lucide="bot" class="w-3.5 h-3.5 text-white"></i>
+              </div>
+              <span class="text-xs font-semibold text-white">AI Business Advisor</span>
+            </div>
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          </div>
+
+          <!-- Chat messages area -->
+          <div id="aiChatMessages" class="flex-1 p-3 overflow-y-auto space-y-3 custom-scrollbar text-xs">
+            <div class="p-3 rounded-xl bg-[#0B1020] border border-[#273449] text-[#CBD5E1]">
+              <p>Hello! I am your AI Business Advisor. I have full context of your plan for <strong id="chatAdvisorPlanName">NexusFlow AI</strong>. Ask me to refine strategies, audit risks, or explain financial metrics.</p>
+            </div>
+          </div>
+
+          <!-- Suggested Prompts -->
+          <div class="p-2 border-t border-[#273449] space-y-1">
+            <span class="text-[10px] text-[#94A3B8] font-medium px-1">QUICK PROMPTS:</span>
+            <div class="flex flex-col gap-1">
+              <button onclick="sendQuickChatMessage('How can I reduce startup costs?')" class="text-left text-[11px] p-1.5 rounded bg-[#0B1020] hover:bg-[#1A2338] text-slate-300 border border-[#273449] transition truncate">
+                💡 How can I reduce startup costs?
+              </button>
+              <button onclick="sendQuickChatMessage('Suggest three high-margin revenue streams')" class="text-left text-[11px] p-1.5 rounded bg-[#0B1020] hover:bg-[#1A2338] text-slate-300 border border-[#273449] transition truncate">
+                📈 Suggest three high-margin revenue streams
+              </button>
+              <button onclick="sendQuickChatMessage('Explain my break-even point')" class="text-left text-[11px] p-1.5 rounded bg-[#0B1020] hover:bg-[#1A2338] text-slate-300 border border-[#273449] transition truncate">
+                ⚖️ Explain my break-even point
+              </button>
+            </div>
+          </div>
+
+          <!-- Chat input -->
+          <div class="p-3 border-t border-[#273449] flex items-center gap-1.5">
+            <input id="aiChatInput" type="text" placeholder="Ask AI advisor..." class="flex-1 bg-[#0B1020] border border-[#273449] rounded-lg px-3 py-2 text-xs text-white outline-none focus:border-[#7C5CFC]" onkeypress="if(event.key === 'Enter') submitAiChat()" />
+            <button onclick="submitAiChat()" class="p-2 rounded-lg bg-[#7C5CFC] hover:bg-[#6A4BE2] text-white transition">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+
+    <!-- ================================================================ -->
+    <!-- VIEW 5: TEMPLATES LIBRARY -->
+    <!-- ================================================================ -->
+    <section id="view-templates" class="view-panel hidden flex-1 py-10 px-6 max-w-6xl mx-auto w-full">
+      <div class="text-center mb-10">
+        <h1 class="text-3xl font-extrabold text-white">14 Ready-to-Launch Business Plan Templates</h1>
+        <p class="text-[#94A3B8] text-sm mt-2">Select a professionally architected template to auto-fill the creation wizard with validated industry assumptions.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="templatesGrid">
+        <!-- Dynamically rendered templates -->
+      </div>
+    </section>
+
+
+    <!-- ================================================================ -->
+    <!-- VIEW 6: PRICING & RAZORPAY SUBSCRIPTION -->
+    <!-- ================================================================ -->
+    <section id="view-pricing" class="view-panel hidden flex-1 py-12 px-6 max-w-6xl mx-auto w-full">
+      <div class="text-center mb-12">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white">Simple, Transparent Pricing</h1>
+        <p class="text-[#94A3B8] text-sm mt-2">Generate unlimited plans, run scenarios, and export investor reports.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <!-- Free Tier -->
+        <div class="p-6 rounded-2xl bg-[#11182B] border border-[#273449] flex flex-col justify-between">
+          <div>
+            <h3 class="text-lg font-bold text-white">Starter Free</h3>
+            <p class="text-xs text-[#94A3B8] mt-1">For student projects & idea exploration</p>
+            <div class="my-6">
+              <span class="text-3xl font-extrabold text-white">$0</span>
+              <span class="text-xs text-[#94A3B8]">/forever</span>
+            </div>
+            <ul class="space-y-3 text-xs text-[#CBD5E1]">
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2"></i> 1 Business Plan</li>
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2"></i> 30 Section AI Generation</li>
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2"></i> Basic PDF Export</li>
+            </ul>
+          </div>
+          <button class="mt-8 w-full py-2.5 rounded-xl bg-[#0B1020] border border-[#273449] text-xs font-semibold text-slate-300">Current Plan</button>
+        </div>
+
+        <!-- Pro Tier (Highlighted) -->
+        <div class="p-6 rounded-2xl bg-gradient-to-b from-[#1E1B4B] to-[#11182B] border-2 border-[#7C5CFC] flex flex-col justify-between shadow-2xl relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-[#7C5CFC] text-white text-[10px] font-bold uppercase tracking-wider">
+            Most Popular
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-white">Professional</h3>
+            <p class="text-xs text-[#94A3B8] mt-1">For serious founders raising capital</p>
+            <div class="my-6">
+              <span class="text-3xl font-extrabold text-white">$29</span>
+              <span class="text-xs text-[#94A3B8]">/month (₹2,499)</span>
+            </div>
+            <ul class="space-y-3 text-xs text-white">
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-[#7C5CFC] mr-2"></i> Unlimited Business Plans</li>
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-[#7C5CFC] mr-2"></i> Advanced 5-Year Financial Models</li>
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-[#7C5CFC] mr-2"></i> Unrestricted PDF & DOCX Downloads</li>
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-[#7C5CFC] mr-2"></i> Unlimited AI Business Assistant</li>
+            </ul>
+          </div>
+          <button onclick="triggerRazorpayCheckout('PROFESSIONAL', 2499)" class="mt-8 w-full py-2.5 rounded-xl bg-[#7C5CFC] hover:bg-[#6A4BE2] text-xs font-bold text-white shadow-lg shadow-[#7C5CFC]/30 transition">
+            Upgrade with Razorpay
+          </button>
+        </div>
+
+        <!-- Enterprise Tier -->
+        <div class="p-6 rounded-2xl bg-[#11182B] border border-[#273449] flex flex-col justify-between">
+          <div>
+            <h3 class="text-lg font-bold text-white">Enterprise Team</h3>
+            <p class="text-xs text-[#94A3B8] mt-1">For incubators, consultants & teams</p>
+            <div class="my-6">
+              <span class="text-3xl font-extrabold text-white">$99</span>
+              <span class="text-xs text-[#94A3B8]">/month (₹7,999)</span>
+            </div>
+            <ul class="space-y-3 text-xs text-[#CBD5E1]">
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2"></i> Everything in Pro</li>
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2"></i> Team Multi-Seat Collaboration</li>
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400 mr-2"></i> Custom White-label Reports</li>
+            </ul>
+          </div>
+          <button onclick="triggerRazorpayCheckout('ENTERPRISE', 7999)" class="mt-8 w-full py-2.5 rounded-xl bg-[#0B1020] hover:bg-[#1A2338] border border-[#273449] text-xs font-semibold text-white transition">
+            Subscribe Enterprise
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================ -->
+    <!-- VIEW 7: ADMIN DASHBOARD -->
+    <!-- ================================================================ -->
+    <section id="view-admin" class="view-panel hidden flex-1 py-10 px-6 max-w-6xl mx-auto w-full">
+      <div class="flex items-center justify-between pb-6 border-b border-[#273449] mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-white">Administration Dashboard</h1>
+          <p class="text-[#94A3B8] text-sm mt-1">Role-protected metrics, system status, and user management.</p>
+        </div>
+        <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-semibold">
+          System Status: Operational
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+        <div class="p-5 rounded-2xl bg-[#11182B] border border-[#273449]">
+          <span class="text-xs font-medium text-[#94A3B8] uppercase">Total Registered Users</span>
+          <p class="text-2xl font-bold text-white mt-1">1,428</p>
+          <span class="text-[11px] text-emerald-400">+14% this month</span>
+        </div>
+        <div class="p-5 rounded-2xl bg-[#11182B] border border-[#273449]">
+          <span class="text-xs font-medium text-[#94A3B8] uppercase">Plans Generated</span>
+          <p class="text-2xl font-bold text-white mt-1">3,892</p>
+          <span class="text-[11px] text-purple-400">30 sections / plan</span>
+        </div>
+        <div class="p-5 rounded-2xl bg-[#11182B] border border-[#273449]">
+          <span class="text-xs font-medium text-[#94A3B8] uppercase">MRR / Revenue</span>
+          <p class="text-2xl font-bold text-white mt-1">$14,820</p>
+          <span class="text-[11px] text-emerald-400">Razorpay verified</span>
+        </div>
+        <div class="p-5 rounded-2xl bg-[#11182B] border border-[#273449]">
+          <span class="text-xs font-medium text-[#94A3B8] uppercase">AI API Latency</span>
+          <p class="text-2xl font-bold text-white mt-1">420 ms</p>
+          <span class="text-[11px] text-cyan-400">Gemini 1.5 Flash</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    // --- Data Store & State ---
+    let currentStep = 1;
+    let activePlan = null;
+    let activeSectionKey = "executive_summary";
+    let userCredits = 25;
+
+    // Pre-seeded Plans
+    const samplePlans = [
+      {
+        id: 1,
+        businessName: "NexusFlow AI",
+        industry: "SaaS & Enterprise Workflow",
+        businessType: "SaaS",
+        businessStage: "Growth",
+        currency: "USD",
+        status: "COMPLETED",
+        updatedAt: "Just now",
+        financials: {
+          breakEvenUnits: 83,
+          breakEvenRevenue: 10000,
+          y1Profit: 84600,
+          grossMargin: "75.0%",
+          runway: "8.8 Months"
+        },
+        sections: {
+          executive_summary: "### Executive Summary\n\n**NexusFlow AI** is an autonomous workflow orchestration SaaS platform built for mid-market knowledge enterprises. By consolidating fragmented manual handoffs between CRM, ticketing, and analytics systems, NexusFlow eliminates up to 14 hours of weekly operational overhead per employee.\n\nThe venture operates in the high-growth enterprise automation market (projected CAGR of 18.2%). Our core defensibility lies in self-improving operational feedback loops and proprietary low-code orchestration connectors.\n\nOver the next 3 years, NexusFlow forecasts rapid scale to $1.2M ARR, achieving cash-flow positivity by month 9 through disciplined unit economics and 75% gross margins.",
+          business_overview: "### Business Overview\n\nNexusFlow AI was founded to eliminate the modern enterprise 'integration tax'—where knowledge workers lose substantial productivity copy-pasting data between siloed software tools.\n\nOur platform integrates natively with existing legacy tech stacks in under 15 minutes, allowing autonomous software agents to handle routine multi-step business operations.",
+          company_description: "### Company Description\n\nIncorporated as a Delaware C-Corp and headquartered in San Francisco, CA, NexusFlow AI maintains a lean, highly technical distributed engineering team with prior domain expertise at top enterprise software companies.",
+          mission_and_vision: "### Mission & Vision\n\n**Mission:** To eliminate manual operational friction so human teams can focus on creative, high-value strategic execution.\n\n**Vision:** To become the default operating substrate for intelligent enterprise automation worldwide.",
+          problem_statement: "### Problem Statement\n\nModern companies utilize an average of 42 distinct cloud applications. This creates:\n1. Severe data fragmentation across departments.\n2. Manual, error-prone synchronization routines.\n3. Escalating support ticket backlogs and customer churn.",
+          proposed_solution: "### Proposed Solution\n\nNexusFlow provides a unified, AI-native autonomous execution fabric. Instead of brittle hard-coded scripts, our context-aware agents understand business intent, execute cross-application tasks safely, and continuously optimize cycle times.",
+          products_and_services: "### Products & Services\n\n- **NexusFlow Core:** Self-serve workflow automation for teams up to 50.\n- **NexusFlow Enterprise:** Advanced governance, HIPAA/SOC-2 compliance, and dedicated VPC hosting.\n- **Connector Marketplace:** 250+ pre-built connectors for Salesforce, Jira, Slack, and SAP.",
+          market_research: "### Market Research\n\nThe global workflow automation market size is valued at $14.2 billion and projected to reach $39.5 billion by 2030. The rapid maturation of large language models has accelerated enterprise willingness to replace brittle legacy RPA with adaptive AI platforms.",
+          industry_analysis: "### Industry Analysis (PESTLE)\n\n- **Economic:** Vendor consolidation trends favor unified suites over multiple disconnected subscriptions.\n- **Technological:** API standardizations and Webhook maturity enable seamless zero-friction deployments.",
+          target_market: "### Target Market\n\nOur initial ideal customer profile (ICP) consists of mid-market B2B software companies and financial service providers with 100 to 1,000 employees experiencing rapid headcount scaling.",
+          competitor_analysis: "### Competitor Analysis\n\n- **Zapier / Make:** Great for basic triggers; insufficient governance and intelligence for complex enterprise edge cases.\n- **UiPath:** Heavy, expensive desktop-centric RPA requiring lengthy professional service contracts.\n- **NexusFlow Edge:** 10x faster deployment, natural-language workflow generation, and 60% lower total cost of ownership.",
+          swot_analysis: "### SWOT Analysis\n\n- **Strengths:** Rapid setup, superior UX, high contribution margins.\n- **Weaknesses:** Early brand visibility compared to publicly traded incumbents.\n- **Opportunities:** International expansion into EU enterprise markets.\n- **Threats:** Incumbents adding generative AI wrappers to legacy workflows.",
+          business_model: "### Business Model\n\nRecurring annual and monthly subscription software licensing with tiered user and automated execution volume quotas. High net retention (>118%) driven by viral internal team adoption.",
+          revenue_streams: "### Revenue Streams\n\n1. Platform Base Subscriptions ($199 - $1,499/mo)\n2. Usage-based overage fees for high-volume transactions\n3. Enterprise deployment and security onboarding packages",
+          pricing_strategy: "### Pricing Strategy\n\nValue-based pricing linked to hours saved and execution volume, guaranteeing an estimated 5x customer ROI within the first 60 days of deployment.",
+          marketing_strategy: "### Marketing Strategy\n\n- Product-led viral growth and community template sharing\n- High-intent search engine optimization targeting workflow automation comparisons\n- Direct outbound sales to VP of Operations and Engineering Directors",
+          sales_strategy: "### Sales Strategy\n\nLow-friction 14-day free trial leading to automated inside sales conversion, backed by technical solutions engineers for complex enterprise evaluations.",
+          operations_plan: "### Operations Plan\n\nContinuous deployment architecture hosted across resilient multi-region cloud providers with 99.95% uptime guarantees and round-the-clock automated telemetry monitoring.",
+          technology_requirements: "### Technology Requirements\n\nJava 21 Spring Boot microservices, high-throughput message queues, PostgreSQL distributed database, and modern React TypeScript frontend.",
+          management_structure: "### Management Structure\n\nLed by experienced co-founders with dual backgrounds in enterprise software engineering and high-velocity go-to-market execution.",
+          startup_cost_analysis: "### Startup Cost Analysis\n\nInitial capital requirement of $45,000 allocated towards core software engineering (30%), infrastructure & security certification (25%), go-to-market launch (25%), and operating reserves (20%).",
+          financial_projections: "### Financial Projections\n\n- Year 1: $180,000 Revenue | $84,600 Net Profit\n- Year 2: $480,000 Revenue | $245,000 Net Profit\n- Year 3: $1,250,000 Revenue | $680,000 Net Profit",
+          break_even_analysis: "### Break-Even Analysis\n\nWith fixed monthly costs of $6,500 and a net contribution margin of $135 per customer unit, NexusFlow achieves monthly break-even at approximately 48 active accounts.",
+          risk_assessment: "### Risk Assessment\n\nPrimary risks include API changes by third-party platforms, data privacy compliance variations, and competitive price aggression by legacy providers.",
+          risk_mitigation: "### Risk Mitigation\n\nMaintain robust multi-vendor abstraction layers, secure early SOC-2 Type II certification, and anchor customer loyalty through deep proprietary workflow history.",
+          implementation_roadmap: "### Implementation Roadmap\n\n- Q1: Alpha launch with 15 design partners\n- Q2: Public GA release and self-serve onboarding\n- Q3: SOC-2 compliance and Enterprise tier launch\n- Q4: Expansion into European and Asian markets",
+          key_performance_indicators: "### Key Performance Indicators (KPIs)\n\n- Monthly Recurring Revenue (MRR) Growth > 15%\n- Customer Acquisition Cost (CAC) Payback < 5 months\n- Net Revenue Retention (NRR) > 115%",
+          conclusion: "### Conclusion\n\nNexusFlow AI represents a timely, high-upside market opportunity positioned at the intersection of workflow automation and enterprise AI. With solid unit economics and a defensible product wedge, the company is primed for scalable success."
+        }
+      }
+    ];
+
+    // Templates Library Data (14 items)
+    const templatesData = [
+      { id: "saas", name: "SaaS Startup", icon: "cloud", tag: "Tech", desc: "For subscription cloud software platforms targeting B2B & B2C markets." },
+      { id: "ecom", name: "E-Commerce Brand", icon: "shopping-bag", tag: "Retail", desc: "Direct-to-consumer and omnichannel e-commerce retail stores." },
+      { id: "restaurant", name: "Restaurant & Cafe", icon: "utensils", tag: "Hospitality", desc: "Food, beverage, cloud kitchen, and casual dining establishments." },
+      { id: "freelance", name: "Freelance / Solo Agency", icon: "user", tag: "Service", desc: "For creative professionals, consultants, and independent contractors." },
+      { id: "retail", name: "Boutique Retail Store", icon: "store", tag: "Local", desc: "Physical brick-and-mortar storefronts and local specialty shops." },
+      { id: "consulting", name: "Management Consulting", icon: "briefcase", tag: "Corporate", desc: "Professional corporate advisory, strategy, and audit services." },
+      { id: "ai", name: "AI / DeepTech Venture", icon: "cpu", tag: "DeepTech", desc: "Foundational AI models, ML tooling, and robotics ventures." },
+      { id: "manufacturing", name: "Manufacturing & Hardware", icon: "factory", tag: "Industrial", desc: "Physical goods production, assembly lines, and supply chain." },
+      { id: "education", name: "EdTech & Academy", icon: "graduation-cap", tag: "Education", desc: "Online learning portals, tutoring networks, and academies." },
+      { id: "healthcare", name: "Healthcare & Clinic", icon: "activity", tag: "MedTech", desc: "Medical clinics, telehealth services, and diagnostic centers." },
+      { id: "realestate", name: "Real Estate & PropTech", icon: "home", tag: "Property", desc: "Property acquisition, brokerage, rental arbitrage, and PropTech." },
+      { id: "travel", name: "Travel & Tourism", icon: "compass", tag: "Hospitality", desc: "Bespoke tour operations, adventure booking, and travel services." },
+      { id: "social", name: "Social Enterprise / NGO", icon: "heart", tag: "Impact", desc: "Mission-driven non-profits, impact ventures, and ESG businesses." },
+      { id: "student", name: "Student Innovation Pitch", icon: "award", tag: "Academic", desc: "University competitions, accelerator grants, and hackathon prototypes." }
+    ];
+
+    // Initialize application on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+      renderPlansList();
+      renderTemplates();
+      activePlan = samplePlans[0];
+      loadPlanIntoEditor(activePlan);
+      renderSvgChart();
+    });
+
+    // --- Navigation & View Switching ---
+    function switchView(viewName) {
+      document.querySelectorAll(".view-panel").forEach(p => p.classList.add("hidden"));
+      const target = document.getElementById("view-" + viewName);
+      if (target) {
+        target.classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        lucide.createIcons();
+      }
+    }
+
+    // --- Toast Notifications ---
+    function showToast(message, type = "success") {
+      const container = document.getElementById("toastContainer");
+      const toast = document.createElement("div");
+      toast.className = `px-4 py-3 rounded-xl shadow-2xl text-xs font-semibold text-white flex items-center space-x-2 border transition-all transform duration-300 pointer-events-auto ${
+        type === "success" ? "bg-emerald-600 border-emerald-400" : "bg-[#7C5CFC] border-[#7C5CFC]"
+      }`;
+      toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'info'}" class="w-4 h-4"></i><span>${message}</span>`;
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // --- Quick Idea Generator ---
+    function handleQuickGenerate() {
+      const idea = document.getElementById("quickIdeaInput").value.trim();
+      if (!idea) {
+        showToast("Please enter a business idea first!", "info");
+        return;
+      }
+      document.getElementById("wizName").value = idea.split(" ")[0] + " Venture";
+      document.getElementById("wizDesc").value = idea;
+      switchView("wizard");
+      showToast("Idea loaded into creation wizard!");
+    }
+
+    // --- Creation Wizard Steps ---
+    function showWizardStep(step) {
+      currentStep = step;
+      document.querySelectorAll(".wizard-step").forEach((s, idx) => {
+        s.classList.toggle("hidden", idx + 1 !== step);
+      });
+
+      // Update indicators
+      document.querySelectorAll(".step-indicator").forEach((ind, idx) => {
+        const circle = ind.querySelector("div");
+        if (idx + 1 < step) {
+          circle.className = "w-9 h-9 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm font-semibold";
+          circle.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i>`;
+        } else if (idx + 1 === step) {
+          circle.className = "w-9 h-9 rounded-full bg-[#7C5CFC] text-white flex items-center justify-center text-sm font-semibold shadow-lg shadow-[#7C5CFC]/30";
+          circle.innerText = step;
+        } else {
+          circle.className = "w-9 h-9 rounded-full bg-[#1A2338] text-[#94A3B8] flex items-center justify-center text-sm font-semibold border border-[#273449]";
+          circle.innerText = idx + 1;
+        }
+      });
+
+      // Update Buttons
+      document.getElementById("wizPrevBtn").classList.toggle("hidden", step === 1);
+      document.getElementById("wizNextBtn").classList.toggle("hidden", step === 5);
+      document.getElementById("wizSubmitBtn").classList.toggle("hidden", step !== 5);
+
+      lucide.createIcons();
+    }
+
+    function nextWizardStep() {
+      if (currentStep < 5) showWizardStep(currentStep + 1);
+    }
+
+    function prevWizardStep() {
+      if (currentStep > 1) showWizardStep(currentStep - 1);
+    }
+
+    // --- Plan Generation Simulation ---
+    function triggerPlanGeneration() {
+      const name = document.getElementById("wizName").value.trim() || "My Startup";
+      const industry = document.getElementById("wizIndustry").value;
+      const type = document.getElementById("wizType").value;
+      const stage = document.getElementById("wizStage").value;
+      const desc = document.getElementById("wizDesc").value;
+      const investment = parseFloat(document.getElementById("wizInvestment").value) || 50000;
+      const opex = parseFloat(document.getElementById("wizOpex").value) || 6000;
+      const price = parseFloat(document.getElementById("wizPrice").value) || 120;
+      const varCost = parseFloat(document.getElementById("wizVarCost").value) || 30;
+
+      // Real Java/JS Formula Parity
+      const cm = price - varCost;
+      const beUnits = cm > 0 ? Math.ceil(opex / cm) : 0;
+      const beRevenue = beUnits * price;
+      const annualSales = beUnits * 1.5 * 12;
+      const y1Revenue = annualSales * price;
+      const y1Profit = y1Revenue - (annualSales * varCost) - (opex * 12);
+      const grossMargin = ((cm / price) * 100).toFixed(1) + "%";
+      const runway = (investment / opex).toFixed(1) + " Months";
+
+      // Show loader
+      const submitBtn = document.getElementById("wizSubmitBtn");
+      submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>Generating 30 Sections with AI...</span>`;
+      submitBtn.disabled = true;
+      lucide.createIcons();
+
+      setTimeout(() => {
+        // Create full plan object
+        const newPlan = {
+          id: samplePlans.length + 1,
+          businessName: name,
+          industry: industry,
+          businessType: type,
+          businessStage: stage,
+          currency: "USD",
+          status: "COMPLETED",
+          updatedAt: "Just now",
+          financials: {
+            breakEvenUnits: beUnits,
+            breakEvenRevenue: beRevenue,
+            y1Profit: y1Profit > 0 ? Math.round(y1Profit) : 45000,
+            grossMargin: grossMargin,
+            runway: runway
+          },
+          sections: generate30Sections(name, industry, type, desc, price, beUnits)
+        };
+
+        samplePlans.unshift(newPlan);
+        activePlan = newPlan;
+        userCredits = Math.max(0, userCredits - 1);
+        document.getElementById("creditsDisplay").innerText = userCredits;
+        document.getElementById("statCredits").innerText = userCredits;
+        document.getElementById("statTotalPlans").innerText = samplePlans.length;
+
+        renderPlansList();
+        loadPlanIntoEditor(newPlan);
+        switchView("editor");
+        showToast("Business Plan successfully generated!");
+
+        // Reset submit button
+        submitBtn.innerHTML = `<i data-lucide="sparkles" class="w-4 h-4"></i><span>Generate Business Plan</span>`;
+        submitBtn.disabled = false;
+        lucide.createIcons();
+      }, 1500);
+    }
+
+    // Helper: Generate all 30 section contents
+    function generate30Sections(name, industry, type, desc, price, beUnits) {
+      const keys = [
+        "executive_summary", "business_overview", "company_description", "mission_and_vision", "business_objectives",
+        "problem_statement", "proposed_solution", "products_and_services", "market_research", "industry_analysis",
+        "target_market", "customer_personas", "competitor_analysis", "swot_analysis", "business_model",
+        "revenue_streams", "pricing_strategy", "marketing_strategy", "sales_strategy", "operations_plan",
+        "technology_requirements", "management_structure", "startup_cost_analysis", "financial_projections", "break_even_analysis",
+        "risk_assessment", "risk_mitigation", "implementation_roadmap", "key_performance_indicators", "conclusion"
+      ];
+
+      const result = {};
+      keys.forEach((key, idx) => {
+        const title = key.split("_").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+        result[key] = `### ${title}\n\nStrategic plan for **${name}** in the **${industry}** sector.\n\n` +
+          `**Core Analysis & Directives:**\n` +
+          `- Specific focus on: ${desc.slice(0, 120)}...\n` +
+          `- Operating as a modern ${type} designed for rapid scalable execution.\n` +
+          `- Unit economics calibrated to reach monthly break-even at ${beUnits} accounts.\n\n` +
+          `*All qualitative insights and strategic initiatives have been structured for investor and banking due-diligence review.*`;
+      });
+      return result;
+    }
+
+    // --- Render Dashboard Plans List ---
+    function renderPlansList() {
+      const list = document.getElementById("plansList");
+      list.innerHTML = "";
+
+      samplePlans.forEach(plan => {
+        const item = document.createElement("div");
+        item.className = "p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-[#1A2338]/40 transition";
+        item.innerHTML = `
+          <div class="flex items-start space-x-3 cursor-pointer" onclick="openPlanEditor(${plan.id})">
+            <div class="w-10 h-10 rounded-xl bg-[#7C5CFC]/15 flex items-center justify-center text-[#7C5CFC] shrink-0 mt-0.5">
+              <i data-lucide="file-check" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white hover:text-[#7C5CFC] transition">${plan.businessName}</h3>
+              <p class="text-xs text-[#94A3B8]">${plan.industry} • ${plan.businessType} • <span class="text-emerald-400">30 Sections Ready</span></p>
+              <span class="text-[10px] text-slate-500">Updated: ${plan.updatedAt}</span>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2 self-end sm:self-auto">
+            <button onclick="openPlanEditor(${plan.id})" class="px-3 py-1.5 rounded-lg bg-[#0B1020] hover:bg-[#1A2338] border border-[#273449] text-xs text-white transition flex items-center space-x-1">
+              <i data-lucide="edit-3" class="w-3.5 h-3.5 text-[#3B82F6]"></i>
+              <span>Edit</span>
+            </button>
+            <button onclick="duplicatePlan(${plan.id})" class="px-3 py-1.5 rounded-lg bg-[#0B1020] hover:bg-[#1A2338] border border-[#273449] text-xs text-white transition flex items-center space-x-1">
+              <i data-lucide="copy" class="w-3.5 h-3.5 text-[#94A3B8]"></i>
+              <span>Copy</span>
+            </button>
+            <button onclick="deletePlan(${plan.id})" class="p-1.5 rounded-lg bg-[#0B1020] hover:bg-rose-500/20 border border-[#273449] text-slate-400 hover:text-rose-400 transition">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        `;
+        list.appendChild(item);
+      });
+      lucide.createIcons();
+    }
+
+    function openPlanEditor(id) {
+      const plan = samplePlans.find(p => p.id === id);
+      if (plan) {
+        activePlan = plan;
+        loadPlanIntoEditor(plan);
+        switchView("editor");
+      }
+    }
+
+    function duplicatePlan(id) {
+      const plan = samplePlans.find(p => p.id === id);
+      if (plan) {
+        const copy = JSON.parse(JSON.stringify(plan));
+        copy.id = samplePlans.length + 1;
+        copy.businessName = plan.businessName + " (Copy)";
+        samplePlans.unshift(copy);
+        renderPlansList();
+        showToast("Plan duplicated successfully!");
+      }
+    }
+
+    function deletePlan(id) {
+      if (confirm("Are you sure you want to delete this business plan?")) {
+        const idx = samplePlans.findIndex(p => p.id === id);
+        if (idx !== -1) {
+          samplePlans.splice(idx, 1);
+          renderPlansList();
+          showToast("Business plan deleted.");
+        }
+      }
+    }
+
+    // --- Load Active Plan into Editor ---
+    function loadPlanIntoEditor(plan) {
+      document.getElementById("editorPlanTitle").innerText = plan.businessName;
+      document.getElementById("chatAdvisorPlanName").innerText = plan.businessName;
+
+      // Update Financial Quick Bar
+      document.getElementById("barBreakEven").innerText = `${plan.financials.breakEvenUnits} Units/Mo ($${(plan.financials.breakEvenRevenue).toLocaleString()})`;
+      document.getElementById("barY1Profit").innerText = `$${(plan.financials.y1Profit).toLocaleString()}`;
+      document.getElementById("barGrossMargin").innerText = plan.financials.grossMargin;
+      document.getElementById("barRunway").innerText = plan.financials.runway;
+
+      // Render Left Section Navigator (all 30 sections)
+      const nav = document.getElementById("sectionNavigator");
+      nav.innerHTML = "";
+      const sectionKeys = Object.keys(plan.sections);
+
+      sectionKeys.forEach((key, idx) => {
+        const title = key.split("_").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+        const btn = document.createElement("button");
+        btn.className = `w-full text-left px-3 py-2 rounded-lg flex items-center justify-between transition ${
+          key === activeSectionKey ? "bg-[#7C5CFC]/20 text-white border border-[#7C5CFC]/40 font-medium" : "text-[#94A3B8] hover:bg-[#1A2338] hover:text-white"
+        }`;
+        btn.onclick = () => selectSection(key);
+        btn.innerHTML = `
+          <span class="truncate pr-1">${idx + 1}. ${title}</span>
+          <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i>
+        `;
+        nav.appendChild(btn);
+      });
+
+      // Load first section content directly (no circular call)
+      activeSectionKey = "executive_summary";
+      const firstContent = plan.sections["executive_summary"] || "";
+      document.getElementById("activeSectionBadge").innerText = "Section 1 of 30";
+      document.getElementById("activeSectionTitle").innerText = "Executive Summary";
+      document.getElementById("sectionEditorContent").value = firstContent;
+      updateWordCount(firstContent);
+      lucide.createIcons();
+    }
+
+    function selectSection(key) {
+      activeSectionKey = key;
+      const title = key.split("_").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+      const sectionIndex = Object.keys(activePlan.sections).indexOf(key) + 1;
+
+      document.getElementById("activeSectionBadge").innerText = `Section ${sectionIndex} of 30`;
+      document.getElementById("activeSectionTitle").innerText = title;
+
+      const content = activePlan.sections[key] || "";
+      document.getElementById("sectionEditorContent").value = content;
+      updateWordCount(content);
+
+      // Re-highlight active nav item in sidebar
+      document.querySelectorAll("#sectionNavigator button").forEach((btn, idx) => {
+        const sectionKeys = Object.keys(activePlan.sections);
+        if (sectionKeys[idx] === key) {
+          btn.className = "w-full text-left px-3 py-2 rounded-lg flex items-center justify-between transition bg-[#7C5CFC]/20 text-white border border-[#7C5CFC]/40 font-medium";
+        } else {
+          btn.className = "w-full text-left px-3 py-2 rounded-lg flex items-center justify-between transition text-[#94A3B8] hover:bg-[#1A2338] hover:text-white";
+        }
+      });
+    }
+
+    function handleSectionInput() {
+      const val = document.getElementById("sectionEditorContent").value;
+      activePlan.sections[activeSectionKey] = val;
+      updateWordCount(val);
+      document.getElementById("editorSaveIndicator").innerText = "Saving changes...";
+      setTimeout(() => {
+        document.getElementById("editorSaveIndicator").innerText = "Autosaved";
+      }, 600);
+    }
+
+    function saveCurrentSection() {
+      const val = document.getElementById("sectionEditorContent").value;
+      activePlan.sections[activeSectionKey] = val;
+      showToast("Section saved to cloud database!");
+    }
+
+    function updateWordCount(text) {
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      document.getElementById("wordCount").innerText = `${words} words`;
+    }
+
+    function aiRewriteSection(instruction) {
+      const current = document.getElementById("sectionEditorContent").value;
+      showToast(`AI rewriting section for: ${instruction}...`, "info");
+
+      setTimeout(() => {
+        let enhanced = current;
+        if (instruction === "investor-ready") {
+          enhanced += `\n\n> **Investor Due-Diligence Addendum:** Quantitative defensibility driven by high barrier-to-entry workflows, 4.2x LTV/CAC ratio, and 18-month projected payback cycles.`;
+        } else if (instruction === "bank-loan") {
+          enhanced += `\n\n> **Debt Service Feasibility:** Operating cash flows maintain a 2.1x debt service coverage ratio (DSCR) under conservative baseline revenue assumptions.`;
+        } else if (instruction === "expand") {
+          enhanced += `\n\n### Operational Detailed Breakdown\n1. Initial operational validation cohort testing.\n2. Automated feedback monitoring ensuring < 0.2% variance in SLA execution.\n3. Institutional vendor partnerships securing multi-year distribution advantages.`;
+        } else {
+          enhanced = `### Enhanced ${activeSectionKey.replace(/_/g, ' ').toUpperCase()}\n\n` +
+                     `Tailored operational strategy refined for **${activePlan.businessName}**.\n\n` +
+                     `Features optimized scalability, regulatory risk buffers, and comprehensive go-to-market milestones.`;
+        }
+        document.getElementById("sectionEditorContent").value = enhanced;
+        activePlan.sections[activeSectionKey] = enhanced;
+        updateWordCount(enhanced);
+        showToast("Section enhanced!");
+      }, 700);
+    }
+
+    // --- AI Assistant Chat Inside Editor ---
+    function submitAiChat() {
+      const input = document.getElementById("aiChatInput");
+      const message = input.value.trim();
+      if (!message) return;
+
+      appendChatMessage("user", message);
+      input.value = "";
+
+      setTimeout(() => {
+        let reply = "";
+        const lower = message.toLowerCase();
+        if (lower.includes("cost") || lower.includes("reduce")) {
+          reply = `For **${activePlan.businessName}**, consider transitioning server infrastructure to serverless consumption models and utilizing automated onboarding to keep early headcount lean.`;
+        } else if (lower.includes("revenue") || lower.includes("stream")) {
+          reply = `Three lucrative revenue expansions for ${activePlan.businessName}:\n1. Annual upfront prepayments with a 15% incentive.\n2. Tiered usage-based overage fees.\n3. Enterprise compliance and SLA add-ons.`;
+        } else if (lower.includes("break-even") || lower.includes("margin")) {
+          reply = `Based on your inputs, your break-even point is **${activePlan.financials.breakEvenUnits} units per month**. Reaching this volume covers your fixed operational monthly expenses.`;
+        } else {
+          reply = `Analyzing **${activeSectionKey}** for ${activePlan.businessName}: Ensure your assumptions clearly highlight verified customer demand. Would you like me to rewrite this section for bank or VC standards?`;
+        }
+        appendChatMessage("ai", reply);
+      }, 600);
+    }
+
+    function sendQuickChatMessage(promptText) {
+      document.getElementById("aiChatInput").value = promptText;
+      submitAiChat();
+    }
+
+    function appendChatMessage(sender, text) {
+      const box = document.getElementById("aiChatMessages");
+      const div = document.createElement("div");
+      div.className = sender === "user"
+        ? "p-2.5 rounded-xl bg-[#7C5CFC]/20 text-white border border-[#7C5CFC]/30 ml-4"
+        : "p-2.5 rounded-xl bg-[#0B1020] text-[#CBD5E1] border border-[#273449] mr-4";
+      div.innerHTML = `<p class="whitespace-pre-line">${text}</p>`;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    // --- Document Generation & Downloads ---
+    function downloadPdf() {
+      showToast("Generating official PDF report...", "info");
+      const text = generateFullPlanText(activePlan);
+      const blob = new Blob([text], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${activePlan.businessName.replace(/\s+/g, '_')}_Business_Plan.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("PDF downloaded successfully!");
+    }
+
+    function downloadDocx() {
+      showToast("Generating editable DOCX file...", "info");
+      const text = generateFullPlanText(activePlan);
+      const blob = new Blob([text], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${activePlan.businessName.replace(/\s+/g, '_')}_Business_Plan.docx`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("DOCX downloaded successfully!");
+    }
+
+    function generateFullPlanText(plan) {
+      let doc = `========================================================================\n`;
+      doc += `BUSINESS PLAN: ${plan.businessName.toUpperCase()}\n`;
+      doc += `Industry: ${plan.industry} | Stage: ${plan.businessStage}\n`;
+      doc += `Generated via Business Plan Generator AI\n`;
+      doc += `========================================================================\n\n`;
+
+      Object.keys(plan.sections).forEach((k, idx) => {
+        doc += `\n[SECTION ${idx + 1}: ${k.toUpperCase()}]\n`;
+        doc += plan.sections[k] + `\n\n`;
+      });
+      return doc;
+    }
+
+    // --- Render Custom Visual SVG Chart ---
+    function renderSvgChart() {
+      const container = document.getElementById("svgChartContainer");
+      container.innerHTML = "";
+      const months = ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12"];
+      const revHeights = [30, 40, 50, 65, 75, 90, 105, 115, 125, 135, 145, 160];
+      const opexHeights = [50, 52, 54, 55, 58, 60, 62, 65, 68, 70, 72, 75];
+
+      months.forEach((m, idx) => {
+        const barGroup = document.createElement("div");
+        barGroup.className = "flex-1 flex flex-col items-center h-full justify-end";
+        barGroup.innerHTML = `
+          <div class="w-full flex items-end justify-center gap-1 h-36">
+            <div class="w-2.5 sm:w-3.5 bg-[#7C5CFC] rounded-t hover:opacity-80 transition" style="height: ${revHeights[idx]}px" title="Revenue: $${revHeights[idx] * 100}"></div>
+            <div class="w-2.5 sm:w-3.5 bg-rose-500/80 rounded-t hover:opacity-80 transition" style="height: ${opexHeights[idx]}px" title="OpEx: $${opexHeights[idx] * 100}"></div>
+          </div>
+          <span class="text-[10px] text-[#94A3B8] mt-1">${m}</span>
+        `;
+        container.appendChild(barGroup);
+      });
+    }
+
+    // --- Render 14 Templates ---
+    function renderTemplates() {
+      const grid = document.getElementById("templatesGrid");
+      grid.innerHTML = "";
+
+      templatesData.forEach(t => {
+        const card = document.createElement("div");
+        card.className = "p-5 rounded-2xl bg-[#11182B] border border-[#273449] hover:border-[#7C5CFC]/50 transition flex flex-col justify-between group";
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-xl bg-[#7C5CFC]/10 text-[#7C5CFC] flex items-center justify-center group-hover:scale-110 transition">
+                <i data-lucide="${t.icon}" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-[#0B1020] text-[#94A3B8] border border-[#273449]">${t.tag}</span>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">${t.name}</h3>
+            <p class="text-xs text-[#94A3B8] leading-relaxed">${t.desc}</p>
+          </div>
+          <button onclick="useTemplate('${t.name}', '${t.tag}')" class="mt-5 w-full py-2 rounded-xl bg-[#0B1020] hover:bg-[#7C5CFC] border border-[#273449] hover:border-transparent text-xs font-semibold text-white transition flex items-center justify-center space-x-1.5">
+            <span>Use Template</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        `;
+        grid.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function useTemplate(templateName, category) {
+      document.getElementById("wizName").value = `${templateName} Venture`;
+      document.getElementById("wizIndustry").value = category.includes("Tech") ? "SaaS & Cloud Software" : "Healthcare & MedTech";
+      document.getElementById("wizDesc").value = `Next-generation ${templateName.toLowerCase()} engineered to capture significant market share via automated operational workflows.`;
+      switchView("wizard");
+      showToast(`Loaded ${templateName} template!`);
+    }
+
+    // --- Razorpay Payment Checkout ---
+    function triggerRazorpayCheckout(planType, inrAmount) {
+      showToast(`Opening Razorpay Checkout (₹${inrAmount.toLocaleString()})...`, "info");
+
+      setTimeout(() => {
+        const confirmed = confirm(
+          `[RAZORPAY SECURE PAYMENT SIMULATION]\n\n` +
+          `Order ID: order_rzp_${Math.random().toString(36).substring(2, 9)}\n` +
+          `Plan: ${planType}\n` +
+          `Amount: ₹${inrAmount.toLocaleString()} INR\n\n` +
+          `Simulate successful transaction verification?`
+        );
+
+        if (confirmed) {
+          userCredits += 50;
+          document.getElementById("creditsDisplay").innerText = userCredits;
+          document.getElementById("statCredits").innerText = userCredits;
+          showToast(`Payment verified! Upgraded to ${planType} plan + 50 Credits added.`);
+        }
+      }, 500);
+    }
+  </script>
+</body>
+</html>
